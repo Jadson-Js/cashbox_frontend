@@ -20,5 +20,11 @@
     "isolatedModules": true /* Transpile each file as a separate module (similar to 'ts.transpileModule'). */,
     "skipLibCheck": true /* Skip type checking of declaration files. */
   },
-  "include": ["**/*.ts", "**/*.tsx", ".expo/types/**/*.ts", "expo-env.d.ts"]
+  "include": [
+    "**/*.ts",
+    "**/*.tsx",
+    ".expo/types/**/*.ts",
+    "expo-env.d.ts",
+    "nativewind-env.d.ts"
+  ]
 }
