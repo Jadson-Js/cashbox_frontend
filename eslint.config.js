@@ -7,4 +7,16 @@ module.exports = defineConfig([
   {
     ignores: ["dist/*"],
   },
+  {
+    settings: {
+      "import/resolver": {
+        alias: {
+          map: [
+            ["@styles", "./src/styles"], // ajuste o caminho conforme necessário
+          ],
+          extensions: [".js", ".jsx", ".ts", ".tsx", ".css"], // Adicione .css
+        },
+      },
+    },
+  },
 ]);
