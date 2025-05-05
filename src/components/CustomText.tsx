@@ -3,15 +3,21 @@ import { Text } from "react-native";
 import tw from "twrnc";
 import { ICustomText } from "../types/ICustomText";
 
-export default function CustomText({
+export function CustomText({
   content,
   size = "M",
   className = "",
 }: ICustomText) {
   const sizes = {
-    L: "text-4xl",
-    M: "text-2xl",
-    S: "text-xl",
+    LOGO: "uppercase text-4xl font-bold",
+    XXL: "text-7xl font-bold",
+    XL: "text-4xl font-bold",
+    L: "text-2xl",
+    LB: "text-2xl font-bold",
+    M: "text-lg",
+    MB: "text-lg font-bold",
+    S: "text-base",
+    SB: "text-base font-bold",
   };
 
   // Combine size with any additional classes

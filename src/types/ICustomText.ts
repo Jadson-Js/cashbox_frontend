@@ -1,6 +1,5 @@
 export interface ICustomText {
   content: string;
-  size: "L" | "M" | "S";
+  size: "LOGO" | "XXL" | "XL" | "L" | "LB" | "M" | "MB" | "S" | "SB";
   className?: string;
-  //color: "white" | "black";
 }
