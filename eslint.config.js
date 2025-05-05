@@ -12,7 +12,7 @@ module.exports = defineConfig([
       "import/resolver": {
         alias: {
           map: [
-            ["@styles", "./src/styles"], // ajuste o caminho conforme necessário
+            ["@tailwind", "./tailwind.css"], // ajuste o caminho conforme necessário
           ],
           extensions: [".js", ".jsx", ".ts", ".tsx", ".css"], // Adicione .css
         },

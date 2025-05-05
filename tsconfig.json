@@ -15,7 +15,7 @@
     "baseUrl": "./",
     "paths": {
       "@/*": ["./*"],
-      "@tailwind": ["global.css"]
+      "@tailwind": ["tailwind.css"]
     },
     "resolveJsonModule": true /* Allows importing modules with a ‘.json’ extension, which is a common practice in node projects. */,
     "isolatedModules": true /* Transpile each file as a separate module (similar to 'ts.transpileModule'). */,

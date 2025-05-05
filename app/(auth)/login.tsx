@@ -1,21 +1,32 @@
 import { Link, router } from "expo-router";
-import { Button, Text, TextInput } from "react-native";
+import { Button, TextInput, View } from "react-native";
+import CustomText from "../../src/components/CustomText";
 
 export default function SignupScreen() {
   return (
-    <>
-      <Text>Cashbox</Text>
+    <View className="h-[100vh] p-16 backgroundLight flex">
+      <View className="flex-1 text-center flex justify-center">
+        <CustomText content="Cashbox" size="L" />
+      </View>
 
-      <Text>Login</Text>
+      <View className="flex-1">
+        <CustomText content="Login" size="M" />
 
-      <TextInput placeholder="Digite your email here" />
-      <TextInput placeholder="Digite your password here" />
+        <TextInput placeholder="Digite your email here" />
+        <TextInput placeholder="Digite your password here" />
+        <Button title="Entrar" onPress={() => router.replace("/(tabs)/home")} />
+        <Link href="/(auth)/signup">
+          <CustomText content="Signup" size="S" />
+        </Link>
+      </View>
 
-      <Button title="Entrar" onPress={() => router.replace("/(tabs)/home")} />
-
-      <Link href="/(auth)/signup">
-        <Text>Go to SIGNUP</Text>
-      </Link>
-    </>
+      <View>
+        <CustomText
+          content="Copyright ©2020 Produced by Ant Finance Experience Technology
+          Department"
+          size="S"
+        />
+      </View>
+    </View>
   );
 }
