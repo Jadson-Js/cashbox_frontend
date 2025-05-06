@@ -1,5 +1,10 @@
-import { Text } from "react-native";
+import { View } from "react-native";
+import { MonthPicker } from "../../../src/components/dashboard/MonthPicker";
 
 export default function HomeScreen() {
-  return <Text className="text-red-500 text-lg">Bem-vindo à Home!</Text>;
+  return (
+    <View className="h-[100vh] p-8 bg-white">
+      <MonthPicker />
+    </View>
+  );
 }

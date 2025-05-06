@@ -1,10 +1,10 @@
-import { Link } from "expo-router";
-import { View } from "react-native";
+import { Link, router } from "expo-router";
+import { Pressable, View } from "react-native";
 import { CustomButton } from "../../src/components/ui/CustomButton";
 import { CustomInputTextIcon } from "../../src/components/ui/CustomInputTextIcon";
 import { CustomText } from "../../src/components/ui/CustomText";
 
-export default function SignupScreen() {
+export default function LoginScreen() {
   return (
     <View className="h-[100vh] bg-white p-16 flex">
       <View className="flex-1 flex justify-center">
@@ -35,7 +35,9 @@ export default function SignupScreen() {
           className="mb-12"
         />
 
-        <CustomButton content="Entrar" className="mb-4" />
+        <Pressable onPress={() => router.replace("/(tabs)/home")}>
+          <CustomButton content="Entrar" className="mb-4" />
+        </Pressable>
 
         <Link href="/(auth)/signup">
           <CustomText content="You not have an account? Sign up" size="S" />
