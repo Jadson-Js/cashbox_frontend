@@ -1,7 +1,7 @@
 import React from "react";
 import { TextInput } from "react-native";
 import { style } from "twrnc";
-import { ICustomInputText } from "../../types/form/ICustomInputText";
+import { ICustomInputText } from "../../types/ui/ICustomInputText";
 
 export function CustomInputText({
   placeholder,

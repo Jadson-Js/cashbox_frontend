@@ -1,7 +1,7 @@
 import React from "react";
 import { Text } from "react-native";
 import { style } from "twrnc";
-import { ICustomText } from "../../types/form/ICustomText";
+import { ICustomText } from "../../types/ui/ICustomText";
 
 export function CustomText({ content, size = "M", className }: ICustomText) {
   const sizes = {
@@ -16,7 +16,11 @@ export function CustomText({ content, size = "M", className }: ICustomText) {
     XS: "text-s font-bold",
   };
 
-  const containerStyle = style("text-slate-400", sizes[size], className);
+  const containerStyle = style(sizes[size], className);
 
-  return <Text style={containerStyle}>{content}</Text>;
+  return (
+    <Text className="text-slate-400" style={containerStyle}>
+      {content}
+    </Text>
+  );
 }

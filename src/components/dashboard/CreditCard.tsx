@@ -1,22 +1,27 @@
+import { IComponent } from "@/src/types/IComponent";
 import { MaterialIcons } from "@expo/vector-icons";
 import React from "react";
 import { View } from "react-native";
 import { style } from "twrnc";
 import { CustomText } from "../ui/CustomText";
 
-export function CreditCard() {
+export function CreditCard({ className }: IComponent) {
+  const componentStyle = style(className);
   const styleArrow = style("text-slate-400 p-2 bg-white rounded-full");
 
   return (
     <View
       className="bg-primary rounded-3xl flex flex-col p-6 justify-center "
-      style={{
-        shadowColor: "#000",
-        shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 0.25,
-        shadowRadius: 3.84,
-        elevation: 5,
-      }}
+      style={[
+        {
+          shadowColor: "#000",
+          shadowOffset: { width: 0, height: 2 },
+          shadowOpacity: 0.25,
+          shadowRadius: 3.84,
+          elevation: 5,
+        },
+        componentStyle,
+      ]}
     >
       <CustomText
         content="Balance"

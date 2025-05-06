@@ -2,7 +2,7 @@ import { MaterialIcons } from "@expo/vector-icons";
 import React from "react";
 import { TextInput, View } from "react-native";
 import tw, { style } from "twrnc";
-import { ICustomInputTextIcon } from "../../types/form/ICustomInputTextIcon";
+import { ICustomInputTextIcon } from "../../types/ui/ICustomInputTextIcon";
 
 export function CustomInputTextIcon({
   placeholder,
@@ -10,13 +10,13 @@ export function CustomInputTextIcon({
   iconColor = "text-slate-400",
   className = "",
 }: ICustomInputTextIcon) {
-  const containerStyle = style(
-    "bg-white rounded-md px-2 border border-slate-200 flex flex-row gap-2 items-center",
-    className,
-  );
+  const containerStyle = style(className);
 
   return (
-    <View style={containerStyle}>
+    <View
+      className="bg-white rounded-md px-2 border border-slate-200 flex flex-row gap-2 items-center"
+      style={containerStyle}
+    >
       <MaterialIcons name={iconName} size={20} style={tw`${iconColor}`} />
       <TextInput
         style={tw`text-lg text-slate-600 flex-1`}
