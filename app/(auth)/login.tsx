@@ -7,14 +7,14 @@ import { CustomText } from "../../src/components/ui/CustomText";
 export default function SignupScreen() {
   return (
     <View className="h-[100vh] bg-white p-16 flex">
-      <View className=" flex justify-center">
+      <View className="flex-1 flex justify-center">
         <CustomText
           content="Cashbox"
           size="XL"
           className="text-center uppercase text-slate-600"
         />
       </View>
-      <View className="flex-1 flex justify-center">
+      <View className="flex-2 flex justify-center">
         <CustomText
           content="Login"
           size="L"
@@ -42,7 +42,7 @@ export default function SignupScreen() {
         </Link>
       </View>
 
-      <View className=" justify-end">
+      <View className="flex-1 justify-end">
         <CustomText
           content="Copyright ©2020 Produced by Ant Finance Experience Technology
           Department"

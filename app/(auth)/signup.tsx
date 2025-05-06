@@ -1,4 +1,4 @@
-import { Link } from "expo-router";
+import { Link, router } from "expo-router";
 import { View } from "react-native";
 import { CustomButton } from "../../src/components/ui/CustomButton";
 import { CustomInputTextIcon } from "../../src/components/ui/CustomInputTextIcon";
@@ -7,14 +7,14 @@ import { CustomText } from "../../src/components/ui/CustomText";
 export default function SignupScreen() {
   return (
     <View className="h-[100vh] bg-white p-16 flex">
-      <View className=" flex justify-center">
+      <View className="flex-1 flex justify-center">
         <CustomText
           content="Cashbox"
           size="XL"
           className="text-center uppercase text-slate-600"
         />
       </View>
-      <View className="flex-1 flex justify-center">
+      <View className="flex-2 flex justify-center">
         <CustomText
           content="Signup"
           size="L"
@@ -43,12 +43,18 @@ export default function SignupScreen() {
 
         <CustomButton content="Register" className="mb-4" />
 
-        <Link href="/(auth)/login">
+        <Link
+          href="/(auth)/login"
+          onPress={() => {
+            console.log("Navigating to login");
+            router.back();
+          }}
+        >
           <CustomText content="Already have an account? Sign in" size="S" />
         </Link>
       </View>
 
-      <View className=" justify-end">
+      <View className="flex-1 justify-end">
         <CustomText
           content="Copyright ©2020 Produced by Ant Finance Experience Technology
           Department"
