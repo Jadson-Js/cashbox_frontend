@@ -1,28 +1,35 @@
-import { Ionicons } from "@expo/vector-icons"; // Assuming you're using Expo icons
+import { MaterialIcons } from "@expo/vector-icons"; // Assuming you're using Expo icons
 import { Tabs } from "expo-router";
 
 export default function TabsLayout() {
   return (
     <Tabs
       screenOptions={{
-        headerShown: false, // Global setting for all tabs
+        tabBarActiveTintColor: "#F35288",
+        tabBarInactiveTintColor: "gray",
+        tabBarStyle: {
+          backgroundColor: "black",
+          borderTopWidth: 0,
+          height: 60,
+        },
+        headerShown: false,
       }}
     >
       <Tabs.Screen
-        name="home"
+        name="home/index"
         options={{
-          title: "Home",
+          title: "Início",
           tabBarIcon: ({ color, size }) => (
-            <Ionicons name="home" size={size} color={color} />
+            <MaterialIcons name="home" size={size} color={color} />
           ),
         }}
       />
       <Tabs.Screen
-        name="settings"
+        name="settings/index"
         options={{
-          title: "Settings",
+          title: "Config",
           tabBarIcon: ({ color, size }) => (
-            <Ionicons name="settings" size={size} color={color} />
+            <MaterialIcons name="settings" size={size} color={color} />
           ),
         }}
       />
