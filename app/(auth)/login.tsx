@@ -1,43 +1,53 @@
 import { Link } from "expo-router";
-import { Text, View } from "react-native";
-import { CustomButton } from "../../src/components/CustomButton";
-import { CustomInputText } from "../../src/components/CustomInputText";
-import { CustomText } from "../../src/components/CustomText";
+import { View } from "react-native";
+import { CustomButton } from "../../src/components/ui/CustomButton";
+import { CustomInputTextIcon } from "../../src/components/ui/CustomInputTextIcon";
+import { CustomText } from "../../src/components/ui/CustomText";
 
 export default function SignupScreen() {
   return (
-    <View className="h-[100vh] p-16 backgroundLight flex">
-      <View className="flex-1 flex justify-center">
+    <View className="h-[100vh] bg-white p-16 flex">
+      <View className=" flex justify-center">
         <CustomText
           content="Cashbox"
           size="XL"
-          className="text-center uppercase text-slate-800"
+          className="text-center uppercase text-slate-600"
         />
       </View>
+      <View className="flex-1 flex justify-center">
+        <CustomText
+          content="Login"
+          size="L"
+          className="text-center  text-slate-600"
+        />
 
-      <View className="flex-1">
-        <Text className="text-4xl font-bold text-center uppercase text-primary mb-4">
-          Login
-        </Text>
+        <View className="bg-slate-200 w-[100%] h-[1px] mb-6"></View>
 
-        <View className="bg-slate-200 w-[100%] h-1 mb-4"></View>
+        <CustomInputTextIcon
+          iconName="person-outline"
+          placeholder="Digite your email here"
+          className="mb-6"
+        />
 
-        <CustomInputText placeholder="Digite your email here" />
+        <CustomInputTextIcon
+          iconName="lock-outline"
+          placeholder="Digite your password here"
+          className="mb-12"
+        />
 
-        <CustomInputText placeholder="Digite your password here" />
-
-        <CustomButton content="Entrar" />
+        <CustomButton content="Entrar" className="mb-4" />
 
         <Link href="/(auth)/signup">
-          <CustomText content="Signup" size="S" />
+          <CustomText content="You not have an account? Sign up" size="S" />
         </Link>
       </View>
 
-      <View>
+      <View className=" justify-end">
         <CustomText
           content="Copyright ©2020 Produced by Ant Finance Experience Technology
           Department"
-          size="S"
+          size="XS"
+          className="text-center"
         />
       </View>
     </View>

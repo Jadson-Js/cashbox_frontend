@@ -1,23 +1,61 @@
-import { Link, router } from "expo-router";
-import { Button, Text, TextInput } from "react-native";
+import { Link } from "expo-router";
+import { View } from "react-native";
+import { CustomButton } from "../../src/components/ui/CustomButton";
+import { CustomInputTextIcon } from "../../src/components/ui/CustomInputTextIcon";
+import { CustomText } from "../../src/components/ui/CustomText";
 
 export default function SignupScreen() {
   return (
-    <>
-      <Text>Cashbox</Text>
+    <View className="h-[100vh] bg-white p-16 flex">
+      <View className=" flex justify-center">
+        <CustomText
+          content="Cashbox"
+          size="XL"
+          className="text-center uppercase text-slate-600"
+        />
+      </View>
+      <View className="flex-1 flex justify-center">
+        <CustomText
+          content="Signup"
+          size="L"
+          className="text-center  text-slate-600"
+        />
 
-      <Text>Signup</Text>
+        <View className="bg-slate-200 w-[100%] h-[1px] mb-6"></View>
 
-      <TextInput placeholder="Digite your email here" />
+        <CustomInputTextIcon
+          iconName="person-outline"
+          placeholder="Digite your email here"
+          className="mb-6"
+        />
 
-      <TextInput placeholder="Digite your password here" />
-      <TextInput placeholder="Repity your password here" />
+        <CustomInputTextIcon
+          iconName="lock-outline"
+          placeholder="Digite your password here"
+          className="mb-6"
+        />
 
-      <Button title="Entrar" onPress={() => router.replace("/(tabs)/home")} />
+        <CustomInputTextIcon
+          iconName="lock-outline"
+          placeholder="Repeat your password here"
+          className="mb-12"
+        />
 
-      <Link href="/(auth)/login">
-        <Text>Go to LOGIN</Text>
-      </Link>
-    </>
+        <CustomButton content="Register" className="mb-4" />
+
+        <Link href="/(auth)/login">
+          <CustomText content="Already have an account? Sign in" size="S" />
+        </Link>
+      </View>
+
+      <View className=" justify-end">
+        <CustomText
+          content="Copyright ©2020 Produced by Ant Finance Experience Technology
+          Department"
+          size="XS"
+          className="text-center"
+        />
+      </View>
+    </View>
   );
 }
