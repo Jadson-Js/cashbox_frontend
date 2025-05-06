@@ -6,7 +6,7 @@ import { CustomText } from "./CustomText";
 
 export function CustomButton({ content, onPress, className }: ICustomButton) {
   const containerStyle = style(
-    "bg-[#F35288] px-12 py-2 rounded self-stretch",
+    "bg-[#007BB8] px-12 py-2 rounded self-stretch",
     className,
   );
 
