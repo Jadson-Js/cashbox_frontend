@@ -18,7 +18,10 @@ export function CustomInputTextIcon({
   return (
     <View style={containerStyle}>
       <MaterialIcons name={iconName} size={20} style={tw`${iconColor}`} />
-      <TextInput className="text-lg text-slate-600" placeholder={placeholder} />
+      <TextInput
+        style={tw`text-lg text-slate-600 flex-1`}
+        placeholder={placeholder}
+      />
     </View>
   );
 }

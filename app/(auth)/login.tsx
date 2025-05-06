@@ -1,12 +1,12 @@
 import { Link, router } from "expo-router";
-import { Pressable, View } from "react-native";
+import { View } from "react-native";
 import { CustomButton } from "../../src/components/ui/CustomButton";
 import { CustomInputTextIcon } from "../../src/components/ui/CustomInputTextIcon";
 import { CustomText } from "../../src/components/ui/CustomText";
 
 export default function LoginScreen() {
   return (
-    <View className="h-[100vh] bg-white p-16 flex">
+    <View className="bg-white p-16 flex h-full">
       <View className="flex-1 flex justify-center">
         <CustomText
           content="Cashbox"
@@ -21,7 +21,7 @@ export default function LoginScreen() {
           className="text-center  text-slate-600"
         />
 
-        <View className="bg-slate-200 w-[100%] h-[1px] mb-6"></View>
+        <View className="bg-slate-200 w-full h-0.5 mb-6"></View>
 
         <CustomInputTextIcon
           iconName="person-outline"
@@ -35,12 +35,18 @@ export default function LoginScreen() {
           className="mb-12"
         />
 
-        <Pressable onPress={() => router.replace("/(tabs)/home")}>
-          <CustomButton content="Entrar" className="mb-4" />
-        </Pressable>
+        <CustomButton
+          content="Entrar"
+          className="mb-8"
+          onPress={() => router.navigate("/(tabs)/home")}
+        />
 
         <Link href="/(auth)/signup">
-          <CustomText content="You not have an account? Sign up" size="S" />
+          <CustomText
+            content="You not have an account? Sign up"
+            size="S"
+            className="text-center"
+          />
         </Link>
       </View>
 
