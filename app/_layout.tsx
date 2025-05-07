@@ -1,6 +1,6 @@
 import "@tailwind";
 import { Stack } from "expo-router";
-// eslint-disable-next-line import/no-unresolved
+
 import { ErrorBoundary } from "react-error-boundary";
 import { Text, View } from "react-native";
 

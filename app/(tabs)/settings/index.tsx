@@ -1,5 +1,10 @@
-import { Text } from "react-native";
+import React from "react";
+import { Text, View } from "react-native";
 
 export default function SettingsScreen() {
-  return <Text>Configurações</Text>;
+  return (
+    <View>
+      <Text>Settings Screen</Text>
+    </View>
+  );
 }
