@@ -1,3 +1,4 @@
+import { colors } from "@/src/constants/colors";
 import React from "react";
 import { TouchableOpacity } from "react-native";
 import { style } from "twrnc";
@@ -9,7 +10,7 @@ export function CustomButton({ content, onPress, className }: ICustomButton) {
 
   return (
     <TouchableOpacity
-      className="bg-[#007BB8] px-12 py-2 rounded-3xl self-stretch"
+      className={`bg-[${colors.primary}] px-12 py-2 rounded-3xl self-stretch`}
       style={containerStyle}
       onPress={onPress}
     >

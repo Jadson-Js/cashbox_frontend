@@ -11,7 +11,7 @@ export interface ITransactionList {
 }
 
 export function TransactionList({ type, className }: ITransactionList) {
-  const componentStyle = style(className); // bg-[#40C900]
+  const componentStyle = style(className);
   const styleArrow = style(
     `text-white p-1 rounded-full ${
       type === TransactionType.INCOME

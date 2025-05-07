@@ -1,3 +1,4 @@
+import { colors } from "@/src/constants/colors";
 import { IComponent } from "@/src/types/IComponent";
 import { MaterialIcons } from "@expo/vector-icons";
 import React from "react";
@@ -11,7 +12,7 @@ export function CreditCard({ className }: IComponent) {
 
   return (
     <View
-      className="bg-primary rounded-3xl flex flex-col p-6 justify-center "
+      className={`bg-${colors.primary} rounded-3xl flex flex-col p-6 justify-center `}
       style={[
         {
           shadowColor: "#000",

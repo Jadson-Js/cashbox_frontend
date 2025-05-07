@@ -6,7 +6,7 @@ import { CustomText } from "../../src/components/ui/CustomText";
 
 export default function SignupScreen() {
   return (
-    <View className="h-[100vh] bg-white p-16 flex">
+    <View className="h-full bg-white p-16 flex">
       <View className="flex-1 flex justify-center">
         <CustomText
           content="Cashbox"
@@ -21,7 +21,7 @@ export default function SignupScreen() {
           className="text-center  text-slate-600"
         />
 
-        <View className="bg-slate-200 w-[100%] h-[1px] mb-6"></View>
+        <View className="bg-slate-200 w-full h-0.5 mb-6"></View>
 
         <CustomInputTextIcon
           iconName="person-outline"
@@ -41,7 +41,11 @@ export default function SignupScreen() {
           className="mb-12"
         />
 
-        <CustomButton content="Register" className="mb-4" />
+        <CustomButton
+          content="Register"
+          className="mb-4"
+          onPress={() => router.navigate("/(tabs)/home")}
+        />
 
         <Pressable onPress={() => router.back()}>
           <CustomText content="Already have an account? Sign in" size="S" />
