@@ -24,7 +24,7 @@ export default function LoginScreen() {
         <View className="bg-slate-200 w-full h-0.5 mb-6"></View>
 
         <CustomInputTextIcon
-          iconName="person-outline"
+          iconName="account-outline"
           placeholder="Digite your email here"
           className="mb-6"
         />

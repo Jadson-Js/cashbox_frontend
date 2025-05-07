@@ -6,11 +6,11 @@ import { ICustomButton } from "../../types/ui/ICustomButton";
 import { CustomText } from "./CustomText";
 
 export function CustomButton({ content, onPress, className }: ICustomButton) {
-  const containerStyle = style(className);
+  const containerStyle = style(className, `bg-[${colors.primary}]`);
 
   return (
     <TouchableOpacity
-      className={`bg-[${colors.primary}] px-12 py-2 rounded-3xl self-stretch`}
+      className={`px-12 py-2 rounded-3xl self-stretch`}
       style={containerStyle}
       onPress={onPress}
     >

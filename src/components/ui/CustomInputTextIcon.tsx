@@ -1,4 +1,4 @@
-import { MaterialIcons } from "@expo/vector-icons";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 import React from "react";
 import { TextInput, View } from "react-native";
 import tw, { style } from "twrnc";
@@ -17,7 +17,11 @@ export function CustomInputTextIcon({
       className="bg-white rounded-md px-2 border border-slate-200 flex flex-row gap-2 items-center"
       style={containerStyle}
     >
-      <MaterialIcons name={iconName} size={20} style={tw`${iconColor}`} />
+      <MaterialCommunityIcons
+        name={iconName}
+        size={20}
+        style={tw`${iconColor}`}
+      />
       <TextInput
         style={tw`text-lg text-slate-600 flex-1`}
         placeholder={placeholder}
