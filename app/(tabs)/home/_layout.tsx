@@ -13,12 +13,14 @@ export default function HomeStackLayout() {
         name="index"
         options={{
           title: "Home",
+          headerShown: false,
         }}
       />
       <Stack.Screen
-        name="details"
+        name="transaction"
         options={{
-          title: "Details",
+          title: "Transaction",
+          headerShown: false,
         }}
       />
     </Stack>

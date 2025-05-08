@@ -10,7 +10,7 @@ export function AddTransactionFixed() {
   );
 
   const handlePress = () => {
-    router.navigate("/(tabs)/home/TransactionFormScreen");
+    router.navigate("/(tabs)/home/TransactionScreen");
   };
 
   return (
