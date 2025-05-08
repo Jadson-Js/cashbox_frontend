@@ -7,7 +7,7 @@ export function CustomInputText({
   placeholder,
   className = "",
 }: ICustomInputText) {
-  const containerStyle = style(className);
+  const containerStyle = style(`text-slate-400 w-full`, className);
 
   return (
     <TextInput style={containerStyle} placeholder={placeholder}></TextInput>

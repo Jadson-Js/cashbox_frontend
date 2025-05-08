@@ -1,12 +1,12 @@
+import { ICustomInputNumber } from "@/src/types/ui/ICustomInputNumber";
 import React from "react";
 import { TextInput } from "react-native";
 import { style } from "twrnc";
-import { ICustomInputText } from "../../types/ui/ICustomInputText";
 
 export function CustomInputNumber({
   placeholder,
   className = "",
-}: ICustomInputText) {
+}: ICustomInputNumber) {
   const [rawValue, setRawValue] = React.useState("0"); // valor em centavos
   const containerStyle = style(className);
 
