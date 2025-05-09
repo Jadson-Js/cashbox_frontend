@@ -38,14 +38,12 @@ export function TransactionItem({
       className="border rounded-3xl bg-white border-slate-200 p-4 flex flex-row items-center gap-4"
       style={shadow}
     >
-      <View className="">
-        <View style={bgIconColor} className="rounded-xl p-2">
-          <MaterialCommunityIcons
-            name={iconName}
-            size={30}
-            style={fillIconColo}
-          />
-        </View>
+      <View style={bgIconColor} className="rounded-xl p-2">
+        <MaterialCommunityIcons
+          name={iconName}
+          size={30}
+          style={fillIconColo}
+        />
       </View>
 
       <View className="flex-1">

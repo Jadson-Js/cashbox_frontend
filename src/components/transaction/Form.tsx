@@ -15,7 +15,7 @@ export function Form({ className }: IComponent) {
 
   const handleChosenCategory = () => {
     console.log("handleChosenCategory");
-    router.navigate("/(tabs)/home/CategoryScreen");
+    router.navigate("/(tabs)/home/SelectCategoryScreen");
   };
 
   const componentStyle = style(className);
