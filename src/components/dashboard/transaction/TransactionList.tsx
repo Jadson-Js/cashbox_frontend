@@ -1,8 +1,9 @@
 import { colors } from "@/src/constants/colors";
 import { TransactionType } from "@/src/constants/enums";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { navigate } from "expo-router/build/global-state/routing";
 import React from "react";
-import { View } from "react-native";
+import { TouchableOpacity, View } from "react-native";
 import { style } from "twrnc";
 import { CustomText } from "../../ui/CustomText";
 import { ITransactionItem, TransactionItem } from "./TransactionItem";
@@ -14,6 +15,22 @@ export interface ITransactionList {
 
 export function TransactionList({ type, className }: ITransactionList) {
   const [transactions, setTransactions] = React.useState<ITransactionItem[]>([
+    {
+      amount: 98.3,
+      category: "Food",
+      iconName: "food",
+      iconColor: colors.primary,
+      description: "Pizza",
+      transactionDate: new Date(),
+    },
+    {
+      amount: -42,
+      category: "Shopping",
+      iconName: "store",
+      iconColor: colors.red,
+      description: "PlayStation 5",
+      transactionDate: new Date(),
+    },
     {
       amount: 98.3,
       category: "Food",
@@ -71,11 +88,17 @@ export function TransactionList({ type, className }: ITransactionList) {
 
   return (
     <View style={componentStyle}>
-      <CustomText
-        content={type === TransactionType.INCOME ? "Incomes" : "Expenses"}
-        size="L"
-        className="text-slate-600 uppercase mb-4"
-      />
+      <View className="flex flex-row justify-between items-center mb-4">
+        <CustomText
+          content={type === TransactionType.INCOME ? "Incomes" : "Expenses"}
+          size="L"
+          className="text-slate-600 uppercase"
+        />
+
+        <TouchableOpacity onPress={() => navigate("/(tabs)/home/Metrics")}>
+          <CustomText content="See more" size="S" className="" />
+        </TouchableOpacity>
+      </View>
 
       <View className="flex gap-4">
         {transactions.length !== 0 ? transactionItens() : noTransactions()}

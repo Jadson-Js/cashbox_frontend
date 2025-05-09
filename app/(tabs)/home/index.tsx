@@ -3,8 +3,7 @@ import { CreditCard } from "@/src/components/dashboard/CreditCard";
 import { MonthPicker } from "@/src/components/dashboard/MonthPicker";
 import { TransactionList } from "@/src/components/dashboard/transaction/TransactionList";
 import { TransactionType } from "@/src/constants/enums";
-import { navigate } from "expo-router/build/global-state/routing";
-import { ScrollView, TouchableOpacity, View } from "react-native";
+import { ScrollView, View } from "react-native";
 
 export default function DashboardScreen() {
   return (
@@ -15,13 +14,9 @@ export default function DashboardScreen() {
 
           <CreditCard className="mb-12" />
 
-          <TouchableOpacity onPress={() => navigate("/(tabs)/home/Metrics")}>
-            <TransactionList type={TransactionType.INCOME} className="mb-12" />
-          </TouchableOpacity>
+          <TransactionList type={TransactionType.INCOME} className="mb-12" />
 
-          <TouchableOpacity onPress={() => navigate("/(tabs)/home/Metrics")}>
-            <TransactionList type={TransactionType.EXPENSE} />
-          </TouchableOpacity>
+          <TransactionList type={TransactionType.EXPENSE} />
         </View>
       </ScrollView>
       <AddTransactionFixed />
