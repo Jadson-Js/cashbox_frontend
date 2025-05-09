@@ -3,7 +3,16 @@ import { View } from "react-native";
 import { CustomText } from "../ui/CustomText";
 
 export function DefineIcon() {
-  const icons = ["shopping", "car", "food", "store"];
+  const icons: (keyof typeof MaterialCommunityIcons.glyphMap)[] = [
+    "account-outline",
+    "car",
+    "shopping",
+    "food",
+    "store",
+    "car",
+    "shopping",
+    "food",
+  ];
 
   const iconsView = icons.map((name, index) => {
     return <MaterialCommunityIcons key={index} name={name} size={50} />;
