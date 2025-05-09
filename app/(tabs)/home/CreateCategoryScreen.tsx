@@ -1,4 +1,6 @@
 import { DefineCategory } from "@/src/components/createCategory/DefineCategory";
+import { DefineColor } from "@/src/components/createCategory/DefineColor";
+import { DefineIcon } from "@/src/components/createCategory/DefineIcon";
 
 import { Header } from "@/src/components/selectCategory/Header";
 import { ScrollView, View } from "react-native";
@@ -16,7 +18,11 @@ export default function CreateCategoryScreen() {
       >
         <Header className="mb-8" />
 
-        <DefineCategory />
+        <View className="flex flex-col gap-8">
+          <DefineCategory />
+          <DefineColor />
+          <DefineIcon />
+        </View>
       </ScrollView>
     </View>
   );
