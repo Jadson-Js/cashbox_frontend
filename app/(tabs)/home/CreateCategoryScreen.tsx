@@ -1,3 +1,5 @@
+import { DefineCategory } from "@/src/components/createCategory/DefineCategory";
+
 import { Header } from "@/src/components/selectCategory/Header";
 import { ScrollView, View } from "react-native";
 
@@ -13,6 +15,8 @@ export default function CreateCategoryScreen() {
         keyboardShouldPersistTaps="handled"
       >
         <Header className="mb-8" />
+
+        <DefineCategory />
       </ScrollView>
     </View>
   );
