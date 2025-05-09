@@ -15,7 +15,7 @@ export function CustomInputDate({
   );
 
   const containerStyle = style(
-    `text-slate-400 text- text-end w-26 text-lg`,
+    `text-slate-400 text- text-end w-30 text-lg`,
     className,
   );
 
