@@ -1,5 +1,6 @@
-export interface ICustomButton {
+import { IComponent } from "../IComponent";
+
+export interface ICustomButton extends IComponent {
   content: string;
   onPress: () => void;
-  className?: string;
 }

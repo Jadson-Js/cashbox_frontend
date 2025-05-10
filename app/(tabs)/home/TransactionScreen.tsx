@@ -1,6 +1,6 @@
+import { Header } from "@/src/components/Header";
 import { Form } from "@/src/components/transaction/Form";
-import { Header } from "@/src/components/transaction/Header";
-import { TypeSelector } from "@/src/components/transaction/TypeSelector";
+import { TypeSelector } from "@/src/components/TypeSelector";
 import { CustomButton } from "@/src/components/ui/CustomButton";
 import {
   Keyboard,

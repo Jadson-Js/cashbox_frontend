@@ -1,4 +1,5 @@
 import { colors } from "@/src/constants/colors";
+import { ROUTES } from "@/src/routes";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { router } from "expo-router";
 import { TouchableOpacity } from "react-native";
@@ -10,7 +11,7 @@ export function AddTransactionFixed() {
   );
 
   const handlePress = () => {
-    router.navigate("/(tabs)/home/TransactionScreen");
+    router.navigate(ROUTES.TRANSACTION);
   };
 
   return (

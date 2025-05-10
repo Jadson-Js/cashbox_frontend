@@ -1,6 +1,6 @@
 import { colors } from "@/src/constants/colors";
 import React from "react";
-import { View } from "react-native";
+import { FlatList, View } from "react-native";
 import { style } from "twrnc";
 import { CategoryItem, ICategoryItem } from "./CategoryItem";
 
@@ -9,72 +9,34 @@ export interface ICategoryList {
 }
 
 export function CategoryList({ className }: ICategoryList) {
-  const [categorys, setCategorys] = React.useState<ICategoryItem[]>([
-    {
-      iconName: "food",
-      iconColor: colors.primary,
-      title: "Food",
-    },
-    {
-      iconName: "car",
-      iconColor: colors.red,
-      title: "Car",
-    },
-    {
-      iconName: "shopping",
-      iconColor: colors.green,
-      title: "Shopping",
-    },
-    {
-      iconName: "food",
-      iconColor: colors.primary,
-      title: "Food",
-    },
-    {
-      iconName: "car",
-      iconColor: colors.red,
-      title: "Car",
-    },
-    {
-      iconName: "shopping",
-      iconColor: colors.green,
-      title: "Shopping",
-    },
-    {
-      iconName: "food",
-      iconColor: colors.primary,
-      title: "Food",
-    },
-    {
-      iconName: "car",
-      iconColor: colors.red,
-      title: "Car",
-    },
-    {
-      iconName: "shopping",
-      iconColor: colors.green,
-      title: "Shopping",
-    },
+  const [categories, setCategories] = React.useState<ICategoryItem[]>([
+    { iconName: "food", iconColor: colors.primary, title: "Food" },
+    { iconName: "car", iconColor: colors.red, title: "Car" },
+    { iconName: "shopping", iconColor: colors.green, title: "Shopping" },
+    { iconName: "food", iconColor: colors.primary, title: "Food" },
+    { iconName: "car", iconColor: colors.red, title: "Car" },
+    { iconName: "shopping", iconColor: colors.green, title: "Shopping" },
+    { iconName: "food", iconColor: colors.primary, title: "Food" },
+    { iconName: "car", iconColor: colors.red, title: "Car" },
+    { iconName: "shopping", iconColor: colors.green, title: "Shopping" },
   ]);
 
   const componentStyle = style(className);
 
-  const categoryItens = () => {
-    return categorys.map((category, index) => {
-      return (
-        <CategoryItem
-          key={index}
-          iconName={category.iconName}
-          iconColor={category.iconColor}
-          title={category.title}
-        />
-      );
-    });
-  };
-
   return (
     <View style={componentStyle}>
-      <View className="flex gap-4">{categoryItens()}</View>
+      <FlatList
+        data={categories}
+        keyExtractor={(_, index) => index.toString()}
+        renderItem={({ item }) => (
+          <CategoryItem
+            iconName={item.iconName}
+            iconColor={item.iconColor}
+            title={item.title}
+          />
+        )}
+        contentContainerStyle={style("gap-4")}
+      />
     </View>
   );
 }

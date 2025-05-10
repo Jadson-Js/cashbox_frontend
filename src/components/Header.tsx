@@ -5,7 +5,8 @@ import { TouchableOpacity, View } from "react-native";
 import { style } from "twrnc";
 
 import { useRouter } from "expo-router";
-import { CustomText } from "../ui/CustomText";
+import { ROUTES } from "../routes";
+import { CustomText } from "./ui/CustomText";
 
 export function Header({ className }: IComponent) {
   const router = useRouter();
@@ -19,7 +20,7 @@ export function Header({ className }: IComponent) {
     if (router.canGoBack()) {
       router.back();
     } else {
-      router.navigate("/(tabs)/home");
+      router.navigate(ROUTES.HOME);
     }
   };
 

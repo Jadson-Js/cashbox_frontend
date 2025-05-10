@@ -1,4 +1,5 @@
 import { colors } from "@/src/constants/colors";
+import { ROUTES } from "@/src/routes";
 import { IComponent } from "@/src/types/IComponent";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
@@ -15,7 +16,7 @@ export function Form({ className }: IComponent) {
 
   const handleChosenCategory = () => {
     console.log("handleChosenCategory");
-    router.navigate("/(tabs)/home/SelectCategoryScreen");
+    router.navigate(ROUTES.SELECT_CATEGORY);
   };
 
   const componentStyle = style(className);

@@ -1,9 +1,10 @@
 import { colors } from "@/src/constants/colors";
 import { TransactionType } from "@/src/constants/enums";
+import { ROUTES } from "@/src/routes";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { navigate } from "expo-router/build/global-state/routing";
 import React from "react";
-import { TouchableOpacity, View } from "react-native";
+import { FlatList, TouchableOpacity, View } from "react-native";
 import { style } from "twrnc";
 import { CustomText } from "../../ui/CustomText";
 import { ITransactionItem, TransactionItem } from "./TransactionItem";
@@ -71,7 +72,26 @@ export function TransactionList({ type, className }: ITransactionList) {
   };
 
   const transactionItens = () => {
-    return transactions.map((transaction, index) => {
+    return (
+      <FlatList
+        className="flex flex-col gap-"
+        data={transactions}
+        keyExtractor={(_, index) => index.toString()}
+        renderItem={({ item }) => (
+          <TransactionItem
+            amount={item.amount}
+            category={item.category}
+            iconName={item.iconName}
+            iconColor={item.iconColor}
+            description={item.description}
+            transactionDate={item.transactionDate}
+          />
+        )}
+        contentContainerStyle={style("gap-4 pb-1")}
+      />
+    );
+
+    /* return transactions.map((transaction, index) => {
       return (
         <TransactionItem
           key={index}
@@ -83,7 +103,7 @@ export function TransactionList({ type, className }: ITransactionList) {
           transactionDate={transaction.transactionDate}
         />
       );
-    });
+    }); */
   };
 
   return (
@@ -95,12 +115,12 @@ export function TransactionList({ type, className }: ITransactionList) {
           className="text-slate-600 uppercase"
         />
 
-        <TouchableOpacity onPress={() => navigate("/(tabs)/home/Metrics")}>
+        <TouchableOpacity onPress={() => navigate(ROUTES.METRICS)}>
           <CustomText content="See more" size="S" className="" />
         </TouchableOpacity>
       </View>
 
-      <View className="flex gap-4">
+      <View>
         {transactions.length !== 0 ? transactionItens() : noTransactions()}
       </View>
     </View>

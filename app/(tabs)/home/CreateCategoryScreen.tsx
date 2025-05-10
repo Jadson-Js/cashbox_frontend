@@ -1,8 +1,8 @@
-import { DefineCategory } from "@/src/components/createCategory/DefineCategory";
-import { DefineColor } from "@/src/components/createCategory/DefineColor";
-import { DefineIcon } from "@/src/components/createCategory/DefineIcon";
+import { DefineCategory } from "@/src/components/createCategory/CategorySelector";
+import { DefineColor } from "@/src/components/createCategory/ColorSelector";
+import { DefineIcon } from "@/src/components/createCategory/IconSelector";
 
-import { Header } from "@/src/components/selectCategory/Header";
+import { Header } from "@/src/components/Header";
 import { ScrollView, View } from "react-native";
 
 export default function CreateCategoryScreen() {
