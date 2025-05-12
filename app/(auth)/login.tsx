@@ -1,5 +1,6 @@
-import { useLogin } from "@/src/hooks/user";
+import { useAuth } from "@/src/hooks/auth";
 import { Link } from "expo-router";
+import React from "react";
 import {
   Keyboard,
   KeyboardAvoidingView,
@@ -12,18 +13,25 @@ import { CustomButton } from "../../src/components/ui/CustomButton";
 import { CustomInputTextIcon } from "../../src/components/ui/CustomInputTextIcon";
 import { CustomText } from "../../src/components/ui/CustomText";
 
-export default function LoginScreen() {
-  const { user, loading, error, login } = useLogin();
+interface LoginFormData {
+  email: string;
+  password: string;
+}
 
-  const handleLogin = async () => {
+export default function LoginScreen() {
+  const { isLoading, error, login } = useAuth();
+  const [formData, setFormData] = React.useState<LoginFormData>({
+    email: "",
+    password: "",
+  });
+
+  const handleSubmit = async () => {
     const credentials = {
       email: "admin@admin.com",
       password: "admin123",
     };
 
-    const response = await login(credentials);
-
-    console.log(user);
+    await login(credentials);
   };
 
   return (
@@ -68,7 +76,7 @@ export default function LoginScreen() {
               <CustomButton
                 content="Entrar"
                 className="mb-8"
-                onPress={handleLogin}
+                onPress={handleSubmit}
               />
 
               <Link href="/(auth)/signup">

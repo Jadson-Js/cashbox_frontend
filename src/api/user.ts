@@ -12,6 +12,12 @@ export interface ILoginResponse {
   refreshToken: string;
 }
 
-export const login = (credentials: ILoginRequest) => {
-  return api.post("/users/login", credentials);
+export const login = (
+  credentials: ILoginRequest,
+): Promise<ILoginResponse | any> => {
+  return api.post<ILoginResponse>("/users/login", credentials, {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
 };
