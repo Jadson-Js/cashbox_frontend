@@ -1,4 +1,5 @@
-import { Link, router } from "expo-router";
+import { useLogin } from "@/src/hooks/user";
+import { Link } from "expo-router";
 import {
   Keyboard,
   KeyboardAvoidingView,
@@ -12,6 +13,19 @@ import { CustomInputTextIcon } from "../../src/components/ui/CustomInputTextIcon
 import { CustomText } from "../../src/components/ui/CustomText";
 
 export default function LoginScreen() {
+  const { user, loading, error, login } = useLogin();
+
+  const handleLogin = async () => {
+    const credentials = {
+      email: "admin@admin.com",
+      password: "admin123",
+    };
+
+    const response = await login(credentials);
+
+    console.log(user);
+  };
+
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === "ios" ? "padding" : "height"}
@@ -54,7 +68,7 @@ export default function LoginScreen() {
               <CustomButton
                 content="Entrar"
                 className="mb-8"
-                onPress={() => router.navigate("/(tabs)/home")}
+                onPress={handleLogin}
               />
 
               <Link href="/(auth)/signup">
