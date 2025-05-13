@@ -1,3 +1,4 @@
+import { AxiosResponse } from "axios";
 import api from "./axios";
 
 export interface ILoginRequest {
@@ -12,10 +13,8 @@ export interface ILoginResponse {
   refreshToken: string;
 }
 
-export const login = (
-  credentials: ILoginRequest,
-): Promise<ILoginResponse | any> => {
-  return api.post<ILoginResponse>("/users/login", credentials, {
+export const login = (credentials: ILoginRequest): Promise<AxiosResponse> => {
+  return api.post("/users/login", credentials, {
     headers: {
       "Content-Type": "application/json",
     },

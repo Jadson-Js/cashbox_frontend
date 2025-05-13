@@ -1,7 +1,9 @@
 import { useAuth } from "@/src/hooks/auth";
 import { Link } from "expo-router";
+import { navigate } from "expo-router/build/global-state/routing";
 import React from "react";
 import {
+  Alert,
   Keyboard,
   KeyboardAvoidingView,
   Platform,
@@ -19,19 +21,21 @@ interface LoginFormData {
 }
 
 export default function LoginScreen() {
-  const { isLoading, error, login } = useAuth();
+  const { data, error, login } = useAuth();
   const [formData, setFormData] = React.useState<LoginFormData>({
     email: "",
     password: "",
   });
 
   const handleSubmit = async () => {
-    const credentials = {
-      email: "admin@admin.com",
-      password: "admin123",
-    };
+    try {
+      await login(formData);
 
-    await login(credentials);
+      navigate("/(tabs)/home");
+    } catch (error) {
+      console.log(error);
+      Alert.alert("Login failed", "Invalid credentials");
+    }
   };
 
   return (
@@ -65,12 +69,19 @@ export default function LoginScreen() {
                 iconName="account-outline"
                 placeholder="Digite your email here"
                 className="mb-6"
+                value={formData.email}
+                setValue={(value) => setFormData({ ...formData, email: value })}
               />
 
               <CustomInputTextIcon
                 iconName="lock-outline"
                 placeholder="Digite your password here"
                 className="mb-12"
+                value={formData.password}
+                setValue={(value) =>
+                  setFormData({ ...formData, password: value })
+                }
+                secureTextEntry={true}
               />
 
               <CustomButton
