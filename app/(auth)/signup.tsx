@@ -1,10 +1,41 @@
+import { useAuth } from "@/src/hooks/auth";
 import { router } from "expo-router";
-import { Pressable, View } from "react-native";
+import React from "react";
+import { Alert, Pressable, View } from "react-native";
 import { CustomButton } from "../../src/components/ui/CustomButton";
 import { CustomInputTextIcon } from "../../src/components/ui/CustomInputTextIcon";
 import { CustomText } from "../../src/components/ui/CustomText";
 
+interface ISignupFormData {
+  email: string;
+  password: string;
+  confirmPassword: string;
+}
+
 export default function SignupScreen() {
+  const { data, error, signup } = useAuth();
+  const [formData, setFormData] = React.useState<ISignupFormData>({
+    email: "",
+    password: "",
+    confirmPassword: "",
+  });
+
+  const handleSignup = async () => {
+    try {
+      if (formData.password !== formData.confirmPassword) {
+        Alert.alert("Signup failed", "Passwords do not match");
+        return;
+      }
+
+      await signup({ email: formData.email, password: formData.password });
+
+      router.navigate("/(auth)/login");
+    } catch (error) {
+      console.log(error);
+      Alert.alert("Signup failed", "Invalid credentials");
+    }
+  };
+
   return (
     <View className="h-full bg-white p-16 flex">
       <View className="flex-1 flex justify-center">
@@ -24,27 +55,34 @@ export default function SignupScreen() {
         <View className="bg-slate-200 w-full h-0.5 mb-6"></View>
 
         <CustomInputTextIcon
-          iconName="person-outline"
+          iconName="account-outline"
           placeholder="Digite your email here"
           className="mb-6"
+          value={formData.email}
+          setValue={(value) => setFormData({ ...formData, email: value })}
         />
 
         <CustomInputTextIcon
-          iconName="lock-outline"
+          iconName="account-outline"
           placeholder="Digite your password here"
           className="mb-6"
+          value={formData.password}
+          setValue={(value) => setFormData({ ...formData, password: value })}
         />
-
         <CustomInputTextIcon
-          iconName="lock-outline"
-          placeholder="Repeat your password here"
-          className="mb-12"
+          iconName="account-outline"
+          placeholder="Digite your password here"
+          className="mb-6"
+          value={formData.confirmPassword}
+          setValue={(value) =>
+            setFormData({ ...formData, confirmPassword: value })
+          }
         />
 
         <CustomButton
           content="Register"
           className="mb-4"
-          onPress={() => router.navigate("/(tabs)/home")}
+          onPress={handleSignup}
         />
 
         <Pressable onPress={() => router.back()}>

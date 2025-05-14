@@ -17,5 +17,16 @@ export function useAuth() {
     }
   };
 
-  return { data, error, login };
+  const signup = async (credentials: ILoginRequest): Promise<void> => {
+    try {
+      const response = await authService.signup(credentials);
+
+      setData(response);
+    } catch (error) {
+      setError(true);
+      throw error;
+    }
+  };
+
+  return { data, error, login, signup };
 }
