@@ -1,5 +1,6 @@
 import { colors } from "@/src/constants/colors";
 import { TransactionType } from "@/src/constants/enums";
+import { useTransactions } from "@/src/context/TransactionContext";
 import { ROUTES } from "@/src/routes";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { usePathname } from "expo-router";
@@ -8,7 +9,7 @@ import React from "react";
 import { FlatList, TouchableOpacity, View } from "react-native";
 import { style } from "twrnc";
 import { CustomText } from "../../ui/CustomText";
-import { ITransactionItem, TransactionItem } from "./TransactionItem";
+import { TransactionItem } from "./TransactionItem";
 
 export interface ITransactionList {
   type: TransactionType;
@@ -18,40 +19,8 @@ export interface ITransactionList {
 export function TransactionList({ type, className }: ITransactionList) {
   const pathName = usePathname();
   const [showSeeMore, setShowSeeMore] = React.useState(false);
-  const [transactions, setTransactions] = React.useState<ITransactionItem[]>([
-    {
-      amount: 98.3,
-      category: "Food",
-      iconName: "food",
-      iconColor: colors.primary,
-      description: "Pizza",
-      transactionDate: new Date(),
-    },
-    {
-      amount: -42,
-      category: "Shopping",
-      iconName: "store",
-      iconColor: colors.red,
-      description: "PlayStation 5",
-      transactionDate: new Date(),
-    },
-    {
-      amount: 98.3,
-      category: "Food",
-      iconName: "food",
-      iconColor: colors.primary,
-      description: "Pizza",
-      transactionDate: new Date(),
-    },
-    {
-      amount: -42,
-      category: "Shopping",
-      iconName: "store",
-      iconColor: colors.red,
-      description: "PlayStation 5",
-      transactionDate: new Date(),
-    },
-  ]);
+
+  const { transactions } = useTransactions();
 
   const componentStyle = style(className);
   const iconStyle = style(
@@ -75,6 +44,7 @@ export function TransactionList({ type, className }: ITransactionList) {
   };
 
   React.useEffect(() => {
+    console.log(transactions);
     setShowSeeMore(pathName === "/home");
   }, []);
 
@@ -87,11 +57,9 @@ export function TransactionList({ type, className }: ITransactionList) {
         renderItem={({ item }) => (
           <TransactionItem
             amount={item.amount}
-            category={item.category}
-            iconName={item.iconName}
-            iconColor={item.iconColor}
+            categoryId={item.category_id}
             description={item.description}
-            transactionDate={item.transactionDate}
+            transactionDate={item.transaction_date}
           />
         )}
         contentContainerStyle={style("gap-4 pb-1")}

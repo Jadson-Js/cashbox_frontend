@@ -1,24 +1,17 @@
-import { colors } from "@/src/constants/colors";
 import { shadow } from "@/src/constants/styles";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { View } from "react-native";
-import tw from "twrnc";
 import { CustomText } from "../../ui/CustomText";
 
 export interface ITransactionItem {
   amount: number;
-  category: string;
-  iconName: keyof typeof MaterialCommunityIcons.glyphMap;
-  iconColor: (typeof colors)[keyof typeof colors];
+  categoryId: string;
   description: string;
   transactionDate: Date;
 }
 
 export function TransactionItem({
   amount,
-  category,
-  iconName,
-  iconColor,
+  categoryId,
   description,
   transactionDate,
 }: ITransactionItem) {
