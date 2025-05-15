@@ -2,6 +2,7 @@ import { colors } from "@/src/constants/colors";
 import { TransactionType } from "@/src/constants/enums";
 import { ROUTES } from "@/src/routes";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { usePathname } from "expo-router";
 import { navigate } from "expo-router/build/global-state/routing";
 import React from "react";
 import { FlatList, TouchableOpacity, View } from "react-native";
@@ -15,6 +16,8 @@ export interface ITransactionList {
 }
 
 export function TransactionList({ type, className }: ITransactionList) {
+  const pathName = usePathname();
+  const [showSeeMore, setShowSeeMore] = React.useState(false);
   const [transactions, setTransactions] = React.useState<ITransactionItem[]>([
     {
       amount: 98.3,
@@ -71,6 +74,10 @@ export function TransactionList({ type, className }: ITransactionList) {
     );
   };
 
+  React.useEffect(() => {
+    setShowSeeMore(pathName === "/home");
+  }, []);
+
   const transactionItens = () => {
     return (
       <FlatList
@@ -90,20 +97,6 @@ export function TransactionList({ type, className }: ITransactionList) {
         contentContainerStyle={style("gap-4 pb-1")}
       />
     );
-
-    /* return transactions.map((transaction, index) => {
-      return (
-        <TransactionItem
-          key={index}
-          amount={transaction.amount}
-          category={transaction.category}
-          iconName={transaction.iconName}
-          iconColor={transaction.iconColor}
-          description={transaction.description}
-          transactionDate={transaction.transactionDate}
-        />
-      );
-    }); */
   };
 
   return (
@@ -115,9 +108,11 @@ export function TransactionList({ type, className }: ITransactionList) {
           className="text-slate-600 uppercase"
         />
 
-        <TouchableOpacity onPress={() => navigate(ROUTES.METRICS)}>
-          <CustomText content="See more" size="S" className="" />
-        </TouchableOpacity>
+        {showSeeMore && (
+          <TouchableOpacity onPress={() => navigate(ROUTES.METRICS)}>
+            <CustomText content="See more" size="S" className="" />
+          </TouchableOpacity>
+        )}
       </View>
 
       <View>

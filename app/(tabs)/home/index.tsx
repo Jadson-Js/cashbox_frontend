@@ -1,7 +1,7 @@
 import { AddTransactionFixed } from "@/src/components/home/AddTransactionFixed";
 import { CreditCard } from "@/src/components/home/CreditCard";
-import { MonthPicker } from "@/src/components/home/MonthPicker";
 import { TransactionList } from "@/src/components/home/transaction/TransactionList";
+import { MonthPicker } from "@/src/components/MonthPicker";
 import { TransactionType } from "@/src/constants/enums";
 import { ScrollView, View } from "react-native";
 

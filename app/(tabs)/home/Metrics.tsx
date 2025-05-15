@@ -1,6 +1,6 @@
-import { Header } from "@/src/components/Header";
 import { TransactionList } from "@/src/components/home/transaction/TransactionList";
 import { Chart } from "@/src/components/metrics/Chart";
+import { Header } from "@/src/components/metrics/Header";
 import { TypeSelector } from "@/src/components/TypeSelector";
 import { TransactionType } from "@/src/constants/enums";
 import {

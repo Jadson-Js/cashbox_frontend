@@ -3,8 +3,8 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 import React from "react";
 import { View } from "react-native";
 import { style } from "twrnc";
-import { shadow } from "../../constants/styles";
-import { CustomText } from "../ui/CustomText";
+import { shadow } from "../constants/styles";
+import { CustomText } from "./ui/CustomText";
 
 export function MonthPicker({ className }: IComponent) {
   const componentStyle = style(className);
