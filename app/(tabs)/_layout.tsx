@@ -1,7 +1,29 @@
+import { useAuth } from "@/src/hooks/useAuth";
 import { MaterialIcons } from "@expo/vector-icons";
-import { Tabs } from "expo-router";
+import { Tabs, useRouter } from "expo-router";
+import React from "react";
+import { ActivityIndicator, View } from "react-native";
 
 export default function TabsLayout() {
+  const { isAuthenticated } = useAuth();
+  const router = useRouter();
+
+  React.useEffect(() => {
+    if (isAuthenticated === false) {
+      console.log("X");
+      router.replace("/(auth)/login");
+    }
+  }, [isAuthenticated]);
+
+  if (isAuthenticated === null) {
+    // Ainda carregando
+    return (
+      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+        <ActivityIndicator size="large" />
+      </View>
+    );
+  }
+
   return (
     <Tabs
       screenOptions={{

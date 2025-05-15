@@ -1,3 +1,4 @@
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { ILoginRequest, login, signup } from "../api/user";
 
 export interface IUser {
@@ -13,6 +14,8 @@ class AuthService {
       if (response.status !== 200) {
         throw new Error("Login failed");
       }
+
+      await AsyncStorage.setItem("accessToken", response.data.accessToken);
 
       return { id: response.data.id, email: response.data.email };
     } catch (error: any) {

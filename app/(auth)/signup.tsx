@@ -1,5 +1,5 @@
 import { colors } from "@/src/constants/colors";
-import { useAuth } from "@/src/hooks/auth";
+import { useAuth } from "@/src/hooks/useAuth";
 import { router } from "expo-router";
 import React from "react";
 import { Alert, Pressable, View } from "react-native";

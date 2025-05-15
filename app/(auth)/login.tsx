@@ -1,5 +1,5 @@
 import { colors } from "@/src/constants/colors";
-import { useAuth } from "@/src/hooks/auth";
+import { useAuth } from "@/src/hooks/useAuth";
 import { router } from "expo-router";
 import React from "react";
 import { Alert, Pressable, View } from "react-native";
@@ -15,8 +15,8 @@ interface ILoginFormData {
 export default function SignupScreen() {
   const { data, error, login } = useAuth();
   const [formData, setFormData] = React.useState<ILoginFormData>({
-    email: "",
-    password: "",
+    email: "admin@admin.com",
+    password: "admin123",
   });
 
   const handleLogin = async () => {

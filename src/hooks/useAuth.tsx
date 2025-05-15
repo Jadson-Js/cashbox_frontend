@@ -1,3 +1,4 @@
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import React from "react";
 import { ILoginRequest } from "../api/user";
 import { authService, IUser } from "../services/auth.service";
@@ -5,6 +6,19 @@ import { authService, IUser } from "../services/auth.service";
 export function useAuth() {
   const [data, setData] = React.useState<IUser>({ id: "", email: "" });
   const [error, setError] = React.useState<boolean>(false);
+  const [isAuthenticated, setIsAuthenticated] = React.useState<boolean | null>(
+    null,
+  );
+
+  React.useEffect(() => {
+    const checkAuth = async () => {
+      const token = await AsyncStorage.getItem("accessToken");
+
+      setIsAuthenticated(!!token);
+    };
+
+    checkAuth();
+  }, []);
 
   const login = async (credentials: ILoginRequest): Promise<void> => {
     try {
@@ -28,5 +42,5 @@ export function useAuth() {
     }
   };
 
-  return { data, error, login, signup };
+  return { data, error, login, signup, isAuthenticated };
 }
