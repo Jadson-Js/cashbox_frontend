@@ -1,3 +1,4 @@
+import { colors } from "@/src/constants/colors";
 import { useAuth } from "@/src/hooks/auth";
 import { router } from "expo-router";
 import React from "react";
@@ -32,6 +33,7 @@ export default function SignupScreen() {
       router.navigate("/(auth)/login");
     } catch (error) {
       console.log(error);
+      setFormData({ email: "", password: "", confirmPassword: "" });
       Alert.alert("Signup failed", "Invalid credentials");
     }
   };
@@ -63,21 +65,32 @@ export default function SignupScreen() {
         />
 
         <CustomInputTextIcon
-          iconName="account-outline"
+          iconName="lock-outline"
           placeholder="Digite your password here"
           className="mb-6"
           value={formData.password}
           setValue={(value) => setFormData({ ...formData, password: value })}
+          isPassword={true}
         />
-        <CustomInputTextIcon
-          iconName="account-outline"
-          placeholder="Digite your password here"
-          className="mb-6"
-          value={formData.confirmPassword}
-          setValue={(value) =>
-            setFormData({ ...formData, confirmPassword: value })
-          }
-        />
+        <View className="mb-6">
+          <CustomInputTextIcon
+            iconName="lock-outline"
+            placeholder="Digite your password here"
+            className="mb-2"
+            value={formData.confirmPassword}
+            setValue={(value) =>
+              setFormData({ ...formData, confirmPassword: value })
+            }
+            isPassword={true}
+          />
+          {error && (
+            <CustomText
+              content="Invalid credentials"
+              size="S"
+              className={`text-center text-[${colors.red}]`}
+            />
+          )}
+        </View>
 
         <CustomButton
           content="Register"
@@ -86,7 +99,7 @@ export default function SignupScreen() {
         />
 
         <Pressable onPress={() => router.back()}>
-          <CustomText content="Already have an account? Sign in" size="S" />
+          <CustomText content="Already have an account? Login" size="S" />
         </Pressable>
       </View>
 

@@ -1,3 +1,4 @@
+import { colors } from "@/src/constants/colors";
 import { useAuth } from "@/src/hooks/auth";
 import { router } from "expo-router";
 import React from "react";
@@ -25,6 +26,7 @@ export default function SignupScreen() {
       router.navigate("/(tabs)/home");
     } catch (error) {
       console.log(error);
+      setFormData({ email: "", password: "" });
       Alert.alert("Login failed", "Invalid credentials");
     }
   };
@@ -55,13 +57,23 @@ export default function SignupScreen() {
           setValue={(value) => setFormData({ ...formData, email: value })}
         />
 
-        <CustomInputTextIcon
-          iconName="account-outline"
-          placeholder="Digite your password here"
-          className="mb-6"
-          value={formData.password}
-          setValue={(value) => setFormData({ ...formData, password: value })}
-        />
+        <View className="mb-6">
+          <CustomInputTextIcon
+            iconName="lock-outline"
+            placeholder="Digite your password here"
+            className="mb-2"
+            value={formData.password}
+            setValue={(value) => setFormData({ ...formData, password: value })}
+            isPassword={true}
+          />
+          {error && (
+            <CustomText
+              content="Invalid credentials"
+              size="S"
+              className={`text-center text-[${colors.red}]`}
+            />
+          )}
+        </View>
 
         <CustomButton
           content="Register"
@@ -69,8 +81,8 @@ export default function SignupScreen() {
           onPress={handleLogin}
         />
 
-        <Pressable onPress={() => router.back()}>
-          <CustomText content="Already have an account? Sign in" size="S" />
+        <Pressable onPress={() => router.navigate("/(auth)/signup")}>
+          <CustomText content="Dont't have an account? Sign in" size="S" />
         </Pressable>
       </View>
 

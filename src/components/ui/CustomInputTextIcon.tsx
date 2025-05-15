@@ -10,7 +10,7 @@ export interface ICustomInputTextIcon extends IComponent {
   iconColor?: string;
   value: string;
   setValue: (value: string) => void;
-  secureTextEntry?: boolean;
+  isPassword?: boolean;
 }
 
 export function CustomInputTextIcon({
@@ -20,7 +20,7 @@ export function CustomInputTextIcon({
   className = "",
   value,
   setValue,
-  secureTextEntry = false,
+  isPassword = false,
 }: ICustomInputTextIcon) {
   const containerStyle = style(
     "bg-white rounded-md px-2 border border-slate-200 flex flex-row gap-2 items-center",
@@ -34,12 +34,23 @@ export function CustomInputTextIcon({
         size={20}
         style={tw`${iconColor}`}
       />
-      <TextInput
-        style={tw`text-lg text-slate-600 flex-1`}
-        placeholder={placeholder}
-        value={value}
-        onChangeText={setValue}
-      />
+
+      {isPassword ? (
+        <TextInput
+          style={tw`text-lg text-slate-600 flex-1`}
+          placeholder={placeholder}
+          value={value}
+          onChangeText={setValue}
+          secureTextEntry={true}
+        />
+      ) : (
+        <TextInput
+          style={tw`text-lg text-slate-600 flex-1`}
+          placeholder={placeholder}
+          value={value}
+          onChangeText={setValue}
+        />
+      )}
     </View>
   );
 }
