@@ -2,39 +2,54 @@ import { colors } from "@/src/constants/colors";
 import { TransactionType } from "@/src/constants/enums";
 import { useTransactions } from "@/src/context/TransactionContext";
 import { ROUTES } from "@/src/routes";
+import { filterTransactionsByMonth } from "@/src/utils/filterTransactionsByMonth";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { usePathname } from "expo-router";
 import { navigate } from "expo-router/build/global-state/routing";
 import React from "react";
 import { FlatList, TouchableOpacity, View } from "react-native";
-import { style } from "twrnc";
+import tw, { style } from "twrnc";
 import { CustomText } from "../../ui/CustomText";
 import { TransactionItem } from "./TransactionItem";
 
 export interface ITransactionList {
   type: TransactionType;
+  selectMonth: number;
   className?: string;
 }
 
-export function TransactionList({ type, className }: ITransactionList) {
-  const pathName = usePathname();
+export function TransactionList({
+  type,
+  selectMonth,
+  className,
+}: ITransactionList) {
   const [showSeeMore, setShowSeeMore] = React.useState(false);
-
+  const pathName = usePathname();
   const { transactions } = useTransactions();
-
-  const componentStyle = style(className);
-  const iconStyle = style(
-    `text-white p-1 rounded-full ${
-      type === TransactionType.INCOME
-        ? `bg-[${colors.green}]`
-        : `bg-[${colors.red}]`
-    }`,
+  const transactionsByMonth = filterTransactionsByMonth(
+    transactions,
+    selectMonth,
   );
+
+  React.useEffect(() => {
+    if (transactionsByMonth.length === 0) return;
+
+    console.log(transactionsByMonth);
+    setShowSeeMore(pathName === "/home");
+  }, [transactionsByMonth]);
 
   const noTransactions = () => {
     return (
       <View className="border border-dashed p-8 rounded-3xl border-slate-400 flex flex-row items-center gap-4">
-        <MaterialCommunityIcons name="plus" size={25} style={iconStyle} />
+        <MaterialCommunityIcons
+          name="plus"
+          size={25}
+          style={tw`text-white p-1 rounded-full ${
+            type === TransactionType.INCOME
+              ? `bg-[${colors.green}]`
+              : `bg-[${colors.red}]`
+          }`}
+        />
         <CustomText
           content={`You dont have any ${type.toLowerCase()}`}
           size="S"
@@ -43,23 +58,19 @@ export function TransactionList({ type, className }: ITransactionList) {
     );
   };
 
-  React.useEffect(() => {
-    console.log(transactions);
-    setShowSeeMore(pathName === "/home");
-  }, []);
-
   const transactionItens = () => {
     return (
       <FlatList
-        className="flex flex-col gap-"
-        data={transactions}
+        className="flex flex-col"
+        data={transactionsByMonth.filter((item) => item.type === type)}
         keyExtractor={(_, index) => index.toString()}
         renderItem={({ item }) => (
           <TransactionItem
             amount={item.amount}
             categoryId={item.category_id}
             description={item.description}
-            transactionDate={item.transaction_date}
+            transactionDate={new Date(item.transaction_date)}
+            transactionType={type}
           />
         )}
         contentContainerStyle={style("gap-4 pb-1")}
@@ -68,7 +79,7 @@ export function TransactionList({ type, className }: ITransactionList) {
   };
 
   return (
-    <View style={componentStyle}>
+    <View style={tw`${className || ""}`}>
       <View className="flex flex-row justify-between items-center mb-4">
         <CustomText
           content={type === TransactionType.INCOME ? "Incomes" : "Expenses"}
@@ -84,7 +95,9 @@ export function TransactionList({ type, className }: ITransactionList) {
       </View>
 
       <View>
-        {transactions.length !== 0 ? transactionItens() : noTransactions()}
+        {transactionsByMonth.length !== 0
+          ? transactionItens()
+          : noTransactions()}
       </View>
     </View>
   );

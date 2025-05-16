@@ -1,13 +1,21 @@
-import { IComponent } from "@/src/types/IComponent";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import React from "react";
 import { View } from "react-native";
-import tw, { style } from "twrnc";
+import tw from "twrnc";
 import { shadow } from "../constants/styles";
 import { CustomText } from "./ui/CustomText";
 
-export function MonthPicker({ className }: IComponent) {
-  const componentStyle = style(className);
+export interface IMonthPicker {
+  selectMonth: number;
+  setSelectMonth: (month: number) => void;
+  className?: string;
+}
+
+export function MonthPicker({
+  selectMonth,
+  setSelectMonth,
+  className,
+}: IMonthPicker) {
   const [months, setMonths] = React.useState<string[]>([
     "January",
     "February",
@@ -22,22 +30,21 @@ export function MonthPicker({ className }: IComponent) {
     "November",
     "December",
   ]);
-  const [currentMonth, setCurrentMonth] = React.useState<number>(2);
 
   const handleChangeMonth = (next: number) => {
     if (
-      (next === -1 && currentMonth === 0) ||
-      (next === 1 && currentMonth === 11)
+      (next === -1 && selectMonth === 0) ||
+      (next === 1 && selectMonth === 11)
     )
       return;
 
-    setCurrentMonth((currentMonth + next) % 12);
+    setSelectMonth((selectMonth + next) % 12);
   };
 
   return (
     <View
       className="bg-white border rounded-full px-8 py-2  border-slate-200 flex flex-row justify-between items-center"
-      style={[shadow, componentStyle]}
+      style={[shadow, tw`${className || ""}`]}
     >
       <MaterialCommunityIcons
         name="chevron-left"
@@ -46,7 +53,7 @@ export function MonthPicker({ className }: IComponent) {
         onPress={() => handleChangeMonth(-1)}
       />
 
-      <CustomText content={months[currentMonth]} size="XS" />
+      <CustomText content={months[selectMonth]} size="XS" />
 
       <MaterialCommunityIcons
         name="chevron-right"

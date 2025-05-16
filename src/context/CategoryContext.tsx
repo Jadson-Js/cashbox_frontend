@@ -1,52 +1,48 @@
 import { createContext, useContext, useEffect, useState } from "react";
-import { IGetTransactionsResponse } from "../api/transaction";
-import { transactionService } from "../services/transaction.service";
+import { IGetCategoriesResponse } from "../api/category";
+import { categoryService } from "../services/category.service";
 
-interface TransactionsContextType {
-  transactions: IGetTransactionsResponse;
+interface CategoriesContextType {
+  categories: IGetCategoriesResponse;
   loading: boolean;
 }
 
-const TransactionsContext = createContext<TransactionsContextType | undefined>(
+const CategoriesContext = createContext<CategoriesContextType | undefined>(
   undefined,
 );
 
-export function TransactionsProvider({ children }: any) {
-  const [transactions, setTransactions] = useState<IGetTransactionsResponse>(
-    [],
-  );
+export function CategoriesProvider({ children }: any) {
+  const [categories, setCategories] = useState<IGetCategoriesResponse>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     // Simule ou chame sua API real aqui
-    async function fetchTransactions() {
+    async function fetchCategories() {
       try {
-        const data = await transactionService.getTransactions();
+        const data = await categoryService.getCategories();
 
-        setTransactions(data);
+        setCategories(data);
       } catch (error) {
-        console.error("Search for transactions failed:", error);
+        console.error("Search for categories failed:", error);
       } finally {
         setLoading(false);
       }
     }
 
-    fetchTransactions();
+    fetchCategories();
   }, []);
 
   return (
-    <TransactionsContext.Provider value={{ transactions, loading }}>
+    <CategoriesContext.Provider value={{ categories, loading }}>
       {children}
-    </TransactionsContext.Provider>
+    </CategoriesContext.Provider>
   );
 }
 
-export function useTransactions() {
-  const context = useContext(TransactionsContext);
+export function useCategories() {
+  const context = useContext(CategoriesContext);
   if (context === undefined) {
-    throw new Error(
-      "useTransactions must be used within a TransactionsProvider",
-    );
+    throw new Error("useCategories must be used within a CategoriesProvider");
   }
   return context;
 }

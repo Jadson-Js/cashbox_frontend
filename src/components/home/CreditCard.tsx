@@ -1,20 +1,48 @@
 import { colors } from "@/src/constants/colors";
+import { TransactionType } from "@/src/constants/enums";
 import { shadow } from "@/src/constants/styles";
-import { IComponent } from "@/src/types/IComponent";
+import { useTransactions } from "@/src/context/TransactionContext";
+
+import { filterTransactionsByMonth } from "@/src/utils/filterTransactionsByMonth";
+import { formatNumberToCurrency } from "@/src/utils/formatNumberToCurrency";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import React from "react";
 import { View } from "react-native";
-import { style } from "twrnc";
+import tw from "twrnc";
 import { CustomText } from "../ui/CustomText";
 
-export function CreditCard({ className }: IComponent) {
-  const componentStyle = style(`bg-[${colors.primary}]`, className);
-  const styleArrow = style("text-slate-400 p-2 bg-white rounded-full");
+export interface ICreditCard {
+  selectMonth: number;
+  className?: string;
+}
+
+export function CreditCard({ selectMonth, className }: ICreditCard) {
+  const { transactions } = useTransactions();
+  const transactionsByMonth = filterTransactionsByMonth(
+    transactions,
+    selectMonth,
+  );
+
+  const balance = transactionsByMonth.reduce((acc, item) => {
+    return item.type === TransactionType.INCOME
+      ? acc + item.amount
+      : acc - item.amount;
+  }, 0);
+
+  const income = transactionsByMonth.reduce((acc, item) => {
+    const amount = Number(item.amount) || 0;
+    return item.type === TransactionType.INCOME ? acc + amount : acc;
+  }, 0);
+
+  const expense = transactionsByMonth.reduce((acc, item) => {
+    const amount = Number(item.amount) || 0;
+    return item.type === TransactionType.EXPENSE ? acc + amount : acc;
+  }, 0);
 
   return (
     <View
       className={` rounded-3xl flex flex-col p-6 justify-center `}
-      style={[shadow, componentStyle]}
+      style={[shadow, tw`bg-[${colors.primary}] ${className || ""}`]}
     >
       <CustomText
         content="Balance"
@@ -22,7 +50,7 @@ export function CreditCard({ className }: IComponent) {
         className="text-white text-center mb-2"
       />
       <CustomText
-        content="R$6.890,00"
+        content={formatNumberToCurrency(balance)}
         size="XL"
         className="text-white text-center mb-8"
       />
@@ -32,11 +60,15 @@ export function CreditCard({ className }: IComponent) {
           <MaterialCommunityIcons
             name="arrow-up"
             size={20}
-            style={styleArrow}
+            style={tw`text-slate-400 p-2 bg-white rounded-full`}
           />
           <View>
             <CustomText content="Income" size="S" className="text-slate-200" />
-            <CustomText content="R$4.921,00" size="SB" className="text-white" />
+            <CustomText
+              content={formatNumberToCurrency(income)}
+              size="SB"
+              className="text-white"
+            />
           </View>
         </View>
 
@@ -44,15 +76,15 @@ export function CreditCard({ className }: IComponent) {
           <MaterialCommunityIcons
             name="arrow-down"
             size={20}
-            style={styleArrow}
+            style={tw`text-slate-400 p-2 bg-white rounded-full`}
           />
           <View>
+            <CustomText content="Expense" size="S" className="text-slate-200" />
             <CustomText
-              content="Expenses"
-              size="S"
-              className="text-slate-200"
+              content={formatNumberToCurrency(expense)}
+              size="SB"
+              className="text-white"
             />
-            <CustomText content="R$4.921,00" size="SB" className="text-white" />
           </View>
         </View>
       </View>
