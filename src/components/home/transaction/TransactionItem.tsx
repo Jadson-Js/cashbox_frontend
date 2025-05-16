@@ -3,6 +3,7 @@ import { colors } from "@/src/constants/colors";
 import { TransactionType } from "@/src/constants/enums";
 import { shadow } from "@/src/constants/styles";
 import { useCategories } from "@/src/context/CategoryContext";
+import { formatDate } from "@/src/utils/formatDate";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { View } from "react-native";
 import tw from "twrnc";
@@ -31,10 +32,7 @@ export function TransactionItem({
   const isIncome = transactionType === TransactionType.INCOME;
   const amountFormated = isIncome ? `+$${amount}` : `-$${amount}`;
   const styleAmount = isIncome ? `text-green-500` : `text-red-500`;
-  const dateFormated =
-    `${String(transactionDate.getMonth() + 1).padStart(2, "0")}/` +
-    `${String(transactionDate.getDate()).padStart(2, "0")}/` +
-    `${transactionDate.getFullYear()}`;
+  const dateFormated = formatDate(new Date(transactionDate));
 
   return (
     <View
