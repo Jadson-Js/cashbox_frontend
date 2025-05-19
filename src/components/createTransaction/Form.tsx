@@ -1,8 +1,10 @@
+import { ICategory } from "@/src/api/category";
 import { colors } from "@/src/constants/colors";
+import { useCategories } from "@/src/context/CategoryContext";
 import { ROUTES } from "@/src/routes";
 import { ITransaction } from "@/src/services/transaction.service";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-import { useRouter } from "expo-router";
+import { useGlobalSearchParams, useRouter } from "expo-router";
 import React from "react";
 import { TouchableOpacity, View } from "react-native";
 import tw from "twrnc";
@@ -19,10 +21,28 @@ export interface IForm {
 
 export function Form({ data, setData, className }: IForm) {
   const router = useRouter();
+  const params = useGlobalSearchParams();
+  const { categories } = useCategories();
+  const [selectCategory, setSelectCategory] = React.useState<
+    ICategory | undefined
+  >(undefined);
 
   const handleChosenCategory = () => {
     router.navigate(ROUTES.SELECT_CATEGORY);
   };
+
+  React.useEffect(() => {
+    if (!params.id || categories.length === 0) return;
+
+    const foundCategory = categories.find((item) => item.id === params.id);
+    if (!foundCategory) return;
+
+    setSelectCategory(foundCategory);
+    setData({
+      ...data,
+      category_id: foundCategory.id,
+    });
+  }, [params, categories]);
 
   return (
     <View style={tw`${className || ""}`}>
@@ -40,7 +60,7 @@ export function Form({ data, setData, className }: IForm) {
             onPress={handleChosenCategory}
             className="flex flex-row items-center "
           >
-            <CustomText content="Chossen" size="M" className="uppercase " />
+            <CustomText content={selectCategory?.title || "Chossen"} size="M" />
             <MaterialCommunityIcons
               name="chevron-right"
               size={30}

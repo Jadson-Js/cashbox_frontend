@@ -1,25 +1,17 @@
 import { colors } from "@/src/constants/colors";
+import { useCategories } from "@/src/context/CategoryContext";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 import React from "react";
 import { FlatList, View } from "react-native";
 import { style } from "twrnc";
-import { CategoryItem, ICategoryItem } from "./CategoryItem";
+import { CategoryItem } from "./CategoryItem";
 
 export interface ICategoryList {
   className?: string;
 }
 
 export function CategoryList({ className }: ICategoryList) {
-  const [categories, setCategories] = React.useState<ICategoryItem[]>([
-    { iconName: "food", iconColor: colors.primary, title: "Food" },
-    { iconName: "car", iconColor: colors.red, title: "Car" },
-    { iconName: "shopping", iconColor: colors.green, title: "Shopping" },
-    { iconName: "food", iconColor: colors.primary, title: "Food" },
-    { iconName: "car", iconColor: colors.red, title: "Car" },
-    { iconName: "shopping", iconColor: colors.green, title: "Shopping" },
-    { iconName: "food", iconColor: colors.primary, title: "Food" },
-    { iconName: "car", iconColor: colors.red, title: "Car" },
-    { iconName: "shopping", iconColor: colors.green, title: "Shopping" },
-  ]);
+  const { categories } = useCategories();
 
   const componentStyle = style(className);
 
@@ -30,12 +22,19 @@ export function CategoryList({ className }: ICategoryList) {
         keyExtractor={(_, index) => index.toString()}
         renderItem={({ item }) => (
           <CategoryItem
-            iconName={item.iconName}
-            iconColor={item.iconColor}
+            id={item.id}
+            iconName={
+              item.icon_name as keyof typeof MaterialCommunityIcons.glyphMap
+            }
+            iconColor={
+              Object.values(colors).includes(item.icon_color as any)
+                ? (item.icon_color as (typeof colors)[keyof typeof colors])
+                : colors.red
+            }
             title={item.title}
           />
         )}
-        contentContainerStyle={style("gap-4")}
+        contentContainerStyle={style("gap-4 p-1")}
       />
     </View>
   );

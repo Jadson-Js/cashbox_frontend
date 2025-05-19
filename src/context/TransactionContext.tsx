@@ -33,7 +33,6 @@ export function TransactionsProvider({ children }: any) {
       }
     }
 
-    console.log("update", update);
     fetchTransactions();
 
     setUpdate(false);
