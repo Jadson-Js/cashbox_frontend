@@ -24,9 +24,12 @@ export function CreditCard({ selectMonth, className }: ICreditCard) {
   );
 
   const balance = transactionsByMonth.reduce((acc, item) => {
-    return item.type === TransactionType.INCOME
-      ? acc + item.amount
-      : acc - item.amount;
+    const result =
+      item.type === TransactionType.INCOME
+        ? (acc += Number(item.amount))
+        : (acc -= Number(item.amount));
+
+    return result;
   }, 0);
 
   const income = transactionsByMonth.reduce((acc, item) => {

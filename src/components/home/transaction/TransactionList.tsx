@@ -34,7 +34,6 @@ export function TransactionList({
   React.useEffect(() => {
     if (transactionsByMonth.length === 0) return;
 
-    console.log(transactionsByMonth);
     setShowSeeMore(pathName === "/home");
   }, [transactionsByMonth]);
 

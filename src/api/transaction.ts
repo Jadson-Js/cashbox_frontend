@@ -48,17 +48,13 @@ export const postTransaction = ({
   transaction_date,
   category_id,
 }: ICreateTransactionRequest): Promise<AxiosResponse> => {
-  return api.post("/transactions", {
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
+  return api.post(
+    "/transactions",
+    { amount, type, description, transaction_date, category_id },
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
     },
-    data: {
-      amount,
-      type,
-      description,
-      transaction_date,
-      category_id,
-    },
-  });
+  );
 };

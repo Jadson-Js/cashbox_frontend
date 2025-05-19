@@ -46,7 +46,7 @@ class TransactionService {
 
       const response = await postTransaction({ token, ...body });
 
-      if (response.status !== 200) {
+      if (response.status !== 201) {
         throw new Error("Post transactions failed");
       }
 
