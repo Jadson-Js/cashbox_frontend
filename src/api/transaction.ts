@@ -1,16 +1,26 @@
 import { AxiosResponse } from "axios";
+import { TransactionType } from "../constants/enums";
 import api from "./axios";
 
 export interface IGetTransactionsRequest {
   token: string;
 }
-
 export type IGetTransactionsResponse = ITransaction[];
+
+export interface ICreateTransactionRequest {
+  token: string;
+  amount: number;
+  type: (typeof TransactionType)[keyof typeof TransactionType];
+  description: string;
+  transaction_date: Date;
+  category_id: string;
+}
+export type ICreateTransactionResponse = ITransaction;
 
 export interface ITransaction {
   id: string;
   amount: number;
-  type: string;
+  type: (typeof TransactionType)[keyof typeof TransactionType];
   description: string;
   transaction_date: Date;
   created_at: Date;
@@ -26,6 +36,29 @@ export const getTransactions = ({
     headers: {
       "Content-Type": "application/json",
       Authorization: `Bearer ${token}`,
+    },
+  });
+};
+
+export const postTransaction = ({
+  token,
+  amount,
+  type,
+  description,
+  transaction_date,
+  category_id,
+}: ICreateTransactionRequest): Promise<AxiosResponse> => {
+  return api.post("/transactions", {
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    data: {
+      amount,
+      type,
+      description,
+      transaction_date,
+      category_id,
     },
   });
 };
