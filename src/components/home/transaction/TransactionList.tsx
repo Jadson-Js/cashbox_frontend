@@ -25,11 +25,15 @@ export function TransactionList({
 }: ITransactionList) {
   const [showSeeMore, setShowSeeMore] = React.useState(false);
   const pathName = usePathname();
-  const { transactions } = useTransactions();
+  const { transactions, setUpdate } = useTransactions();
   const transactionsByMonth = filterTransactionsByMonth(
     transactions,
     selectMonth,
   );
+
+  React.useEffect(() => {
+    setUpdate(true);
+  }, []);
 
   React.useEffect(() => {
     if (transactionsByMonth.length === 0) return;

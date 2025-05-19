@@ -5,6 +5,7 @@ import { transactionService } from "../services/transaction.service";
 interface TransactionsContextType {
   transactions: IGetTransactionsResponse;
   loading: boolean;
+  setUpdate: (value: boolean) => void;
 }
 
 const TransactionsContext = createContext<TransactionsContextType | undefined>(
@@ -16,6 +17,7 @@ export function TransactionsProvider({ children }: any) {
     [],
   );
   const [loading, setLoading] = useState(true);
+  const [update, setUpdate] = useState(false);
 
   useEffect(() => {
     // Simule ou chame sua API real aqui
@@ -31,11 +33,14 @@ export function TransactionsProvider({ children }: any) {
       }
     }
 
+    console.log("update", update);
     fetchTransactions();
-  }, []);
+
+    setUpdate(false);
+  }, [update]);
 
   return (
-    <TransactionsContext.Provider value={{ transactions, loading }}>
+    <TransactionsContext.Provider value={{ transactions, loading, setUpdate }}>
       {children}
     </TransactionsContext.Provider>
   );

@@ -4,7 +4,9 @@ import { TypeSelector } from "@/src/components/TypeSelector";
 import { CustomButton } from "@/src/components/ui/CustomButton";
 import { TransactionType } from "@/src/constants/enums";
 import { useTransaction } from "@/src/hooks/useTransaction";
+import { ROUTES } from "@/src/routes";
 import { ITransaction } from "@/src/services/transaction.service";
+import { useRouter } from "expo-router";
 import React from "react";
 import {
   Keyboard,
@@ -16,6 +18,7 @@ import {
 } from "react-native";
 
 export default function TransactionScreen() {
+  const router = useRouter();
   const { error, createTransaction } = useTransaction();
   const [data, setData] = React.useState<ITransaction>({
     amount: 500,
@@ -24,6 +27,11 @@ export default function TransactionScreen() {
     transaction_date: new Date(),
     category_id: "81dbcbc0-b7f3-4fae-a101-55949337b2da",
   });
+
+  const handleCreateTransaction = () => {
+    createTransaction(data);
+    router.push(ROUTES.HOME);
+  };
 
   return (
     <View className="h-full bg-white relative">
@@ -49,7 +57,7 @@ export default function TransactionScreen() {
 
       <CustomButton
         content="Create new"
-        onPress={() => createTransaction(data)}
+        onPress={handleCreateTransaction}
         className="absolute bottom-8 left-0 right-0 flex items-center mx-8"
       />
     </View>
