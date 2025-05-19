@@ -42,7 +42,7 @@ export default function TransactionScreen() {
           >
             <Header className="mb-8" />
             <TypeSelector className="mb-16" data={data} setData={setData} />
-            <Form />
+            <Form data={data} setData={setData} />
           </ScrollView>
         </TouchableWithoutFeedback>
       </KeyboardAvoidingView>

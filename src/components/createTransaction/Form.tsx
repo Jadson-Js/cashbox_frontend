@@ -1,32 +1,36 @@
 import { colors } from "@/src/constants/colors";
 import { ROUTES } from "@/src/routes";
-import { IComponent } from "@/src/types/IComponent";
+import { ITransaction } from "@/src/services/transaction.service";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
 import React from "react";
 import { TouchableOpacity, View } from "react-native";
-import { style } from "twrnc";
+import tw from "twrnc";
 import { CustomInputDate } from "../ui/CustomInputDate";
 import { CustomInputNumber } from "../ui/CustomInputNumber";
 import { CustomInputText } from "../ui/CustomInputText";
 import { CustomText } from "../ui/CustomText";
 
-export function Form({ className }: IComponent) {
+export interface IForm {
+  data: ITransaction;
+  setData: (value: ITransaction) => void;
+  className?: string;
+}
+
+export function Form({ data, setData, className }: IForm) {
   const router = useRouter();
 
   const handleChosenCategory = () => {
-    console.log("handleChosenCategory");
     router.navigate(ROUTES.SELECT_CATEGORY);
   };
 
-  const componentStyle = style(className);
-  const colorIcon = style("text-slate-400 w-8 h-8");
-
   return (
-    <View style={componentStyle}>
+    <View style={tw`${className || ""}`}>
       <CustomInputNumber
         placeholder="R$0,00"
         className={`text-3xl font-bold text-center mb-12 text-[${colors.primary}]`}
+        value={data.amount}
+        setValue={(value) => setData({ ...data, amount: Number(value) })}
       />
 
       <View className="flex flex-col gap-4 ">
@@ -40,7 +44,7 @@ export function Form({ className }: IComponent) {
             <MaterialCommunityIcons
               name="chevron-right"
               size={30}
-              style={colorIcon}
+              style={tw`text-slate-400 w-8 h-8`}
             />
           </TouchableOpacity>
         </View>
