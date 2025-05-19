@@ -52,7 +52,10 @@ export function Form({ data, setData, className }: IForm) {
         <View className="flex flex-row justify-between items-center border-b border-slate-200 pb-4 ">
           <CustomText content="Date" size="MB" className="text-slate-600" />
 
-          <CustomInputDate />
+          <CustomInputDate
+            value={data.transaction_date}
+            setValue={(value) => setData({ ...data, transaction_date: value })}
+          />
         </View>
 
         <View className="flex flex-col items-start border-b border-slate-200 pb-4 gap-2 max-h-60">
@@ -65,6 +68,8 @@ export function Form({ data, setData, className }: IForm) {
           <CustomInputText
             placeholder="Digite your description here"
             className=""
+            value={data.description}
+            setValue={(value) => setData({ ...data, description: value })}
           />
         </View>
       </View>

@@ -21,14 +21,15 @@ export default function TransactionScreen() {
   const router = useRouter();
   const { error, createTransaction } = useTransaction();
   const [data, setData] = React.useState<ITransaction>({
-    amount: 500,
+    amount: 0,
     type: TransactionType.INCOME,
     description: "",
-    transaction_date: new Date(),
+    transaction_date: "08/03/2005",
     category_id: "81dbcbc0-b7f3-4fae-a101-55949337b2da",
   });
 
   const handleCreateTransaction = () => {
+    console.log(data);
     createTransaction(data);
     router.push(ROUTES.HOME);
   };

@@ -5,7 +5,7 @@ import api from "./axios";
 export interface IGetTransactionsRequest {
   token: string;
 }
-export type IGetTransactionsResponse = ITransaction[];
+export type IGetTransactionsResponse = ITransactionData[];
 
 export interface ICreateTransactionRequest {
   token: string;
@@ -15,9 +15,9 @@ export interface ICreateTransactionRequest {
   transaction_date: Date;
   category_id: string;
 }
-export type ICreateTransactionResponse = ITransaction;
+export type ICreateTransactionResponse = ITransactionData;
 
-export interface ITransaction {
+export interface ITransactionData {
   id: string;
   amount: number;
   type: (typeof TransactionType)[keyof typeof TransactionType];

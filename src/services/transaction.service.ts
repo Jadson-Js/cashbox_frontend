@@ -11,7 +11,7 @@ export interface ITransaction {
   amount: number;
   type: (typeof TransactionType)[keyof typeof TransactionType];
   description: string;
-  transaction_date: Date;
+  transaction_date: string;
   category_id: string;
 }
 
@@ -44,7 +44,14 @@ class TransactionService {
         throw new Error("No token found");
       }
 
-      const response = await postTransaction({ token, ...body });
+      const { transaction_date, ...restBody } = body;
+      const data = {
+        token,
+        transaction_date: new Date(transaction_date),
+        ...restBody,
+      };
+
+      const response = await postTransaction(data);
 
       if (response.status !== 201) {
         throw new Error("Post transactions failed");
