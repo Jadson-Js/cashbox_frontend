@@ -1,15 +1,22 @@
 import { colors } from "@/src/constants/colors";
 import { IComponent } from "@/src/types/IComponent";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { useGlobalSearchParams } from "expo-router";
 import React from "react";
 import { TouchableOpacity, View } from "react-native";
-import { style } from "twrnc";
+import tw, { style } from "twrnc";
+import { TransactionType } from "../constants/enums";
 import { shadow } from "../constants/styles";
 import { CustomText } from "./ui/CustomText";
 
 export function TypeSelector({ className }: IComponent) {
   const [isIncome, setIsIncome] = React.useState(true);
-  const componentStyle = style(className);
+  const params = useGlobalSearchParams();
+
+  React.useEffect(() => {
+    if (!params.type) return;
+    setIsIncome(params.type === TransactionType.INCOME);
+  }, [params]);
 
   const viewBase = style(
     `flex-1 flex flex-row gap-2 rounded-full px-4 py-2 items-center justify-center `,
@@ -24,7 +31,7 @@ export function TypeSelector({ className }: IComponent) {
   return (
     <View
       className="bg-white border rounded-full  border-slate-200 flex flex-row  items-center"
-      style={[shadow, componentStyle]}
+      style={[shadow, tw`${className || ""}`]}
     >
       <TouchableOpacity
         onPress={() => setIsIncome(true)}

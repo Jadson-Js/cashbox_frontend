@@ -1,5 +1,5 @@
+import { Form } from "@/src/components/createTransaction/Form";
 import { Header } from "@/src/components/Header";
-import { Form } from "@/src/components/transaction/Form";
 import { TypeSelector } from "@/src/components/TypeSelector";
 import { CustomButton } from "@/src/components/ui/CustomButton";
 import {

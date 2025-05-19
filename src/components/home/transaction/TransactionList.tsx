@@ -4,7 +4,7 @@ import { useTransactions } from "@/src/context/TransactionContext";
 import { ROUTES } from "@/src/routes";
 import { filterTransactionsByMonth } from "@/src/utils/filterTransactionsByMonth";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-import { usePathname } from "expo-router";
+import { Link, usePathname } from "expo-router";
 import { navigate } from "expo-router/build/global-state/routing";
 import React from "react";
 import { FlatList, TouchableOpacity, View } from "react-native";
@@ -40,21 +40,28 @@ export function TransactionList({
 
   const noTransactions = () => {
     return (
-      <View className="border border-dashed p-8 rounded-3xl border-slate-400 flex flex-row items-center gap-4">
-        <MaterialCommunityIcons
-          name="plus"
-          size={25}
-          style={tw`text-white p-1 rounded-full ${
-            type === TransactionType.INCOME
-              ? `bg-[${colors.green}]`
-              : `bg-[${colors.red}]`
-          }`}
-        />
-        <CustomText
-          content={`You dont have any ${type.toLowerCase()}`}
-          size="S"
-        />
-      </View>
+      <Link
+        href={{
+          pathname: ROUTES.TRANSACTION,
+          params: { type },
+        }}
+      >
+        <View className="border border-dashed p-8 rounded-3xl border-slate-400 flex flex-row items-center gap-4">
+          <MaterialCommunityIcons
+            name="plus"
+            size={25}
+            style={tw`text-white p-1 rounded-full ${
+              type === TransactionType.INCOME
+                ? `bg-[${colors.green}]`
+                : `bg-[${colors.red}]`
+            }`}
+          />
+          <CustomText
+            content={`You dont have any ${type.toLowerCase()}`}
+            size="S"
+          />
+        </View>
+      </Link>
     );
   };
 
