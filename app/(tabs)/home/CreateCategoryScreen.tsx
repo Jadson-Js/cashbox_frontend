@@ -1,11 +1,21 @@
-import { DefineCategory } from "@/src/components/createCategory/CategorySelector";
-import { DefineColor } from "@/src/components/createCategory/ColorSelector";
-import { DefineIcon } from "@/src/components/createCategory/IconSelector";
+import { CategorySelector } from "@/src/components/createCategory/CategorySelector";
+import { ColorSelector } from "@/src/components/createCategory/ColorSelector";
+import { IconSelector } from "@/src/components/createCategory/IconSelector";
 
 import { Header } from "@/src/components/Header";
+import { colors } from "@/src/constants/colors";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
+import React from "react";
 import { ScrollView, View } from "react-native";
 
 export default function CreateCategoryScreen() {
+  const [title, setTitle] = React.useState<string>("Shopping");
+  const [iconName, setIconName] =
+    React.useState<keyof typeof MaterialCommunityIcons.glyphMap>("shopping");
+  const [iconColor, setIconColor] = React.useState<
+    (typeof colors)[keyof typeof colors]
+  >(colors.primary);
+
   return (
     <View className="h-full bg-white relative">
       <ScrollView
@@ -19,9 +29,14 @@ export default function CreateCategoryScreen() {
         <Header className="mb-8" />
 
         <View className="flex flex-col gap-8">
-          <DefineCategory />
-          <DefineColor />
-          <DefineIcon />
+          <CategorySelector
+            title={title}
+            setTitle={setTitle}
+            iconName={iconName}
+            iconColor={iconColor}
+          />
+          <ColorSelector setIconColor={(value) => setIconColor(value)} />
+          <IconSelector setIconName={(value) => setIconName(value)} />
         </View>
       </ScrollView>
     </View>

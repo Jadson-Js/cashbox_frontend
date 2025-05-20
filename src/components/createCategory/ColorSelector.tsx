@@ -1,20 +1,30 @@
 import { colors } from "@/src/constants/colors";
-import { View } from "react-native";
-import { style } from "twrnc";
+import { FlatList, TouchableOpacity, View } from "react-native";
+import tw from "twrnc";
 import { CustomText } from "../ui/CustomText";
 
-export function DefineColor() {
-  const colorsView = Object.entries(colors).map(([name, hex]) => {
-    const styleComponent = style(`w-10 h-10 rounded-full bg-[${hex}]`);
+export interface IColorSelector {
+  setIconColor: (value: (typeof colors)[keyof typeof colors]) => void;
+}
 
-    return <View style={styleComponent} key={name}></View>;
-  });
-
+export function ColorSelector({ setIconColor }: IColorSelector) {
   return (
     <View>
       <CustomText content="Color" size="L" className="mb-4 text-slate-600" />
 
-      <View className="flex flex-row gap-4">{colorsView}</View>
+      <FlatList
+        data={Object.values(colors)}
+        numColumns={4}
+        keyExtractor={(item) => item}
+        contentContainerStyle={tw`gap-y-4 px-4 pt-2`} // espaçamento entre linhas
+        columnWrapperStyle={tw`justify-between mb-4`} // espaçamento horizontal entre colunas
+        renderItem={({ item }) => (
+          <TouchableOpacity
+            onPress={() => setIconColor(item)}
+            style={[tw`w-10 h-10 rounded-full`, { backgroundColor: item }]}
+          />
+        )}
+      />
     </View>
   );
 }
