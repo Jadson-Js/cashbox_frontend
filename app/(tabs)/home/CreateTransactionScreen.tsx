@@ -50,7 +50,11 @@ export default function TransactionScreen() {
             keyboardShouldPersistTaps="handled"
           >
             <Header className="mb-8" />
-            <TypeSelector className="mb-16" data={data} setData={setData} />
+            <TypeSelector
+              className="mb-16"
+              type={data.type}
+              setType={(value) => setData({ ...data, type: value })}
+            />
             <Form data={data} setData={setData} />
           </ScrollView>
         </TouchableWithoutFeedback>

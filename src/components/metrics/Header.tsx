@@ -1,4 +1,3 @@
-import { IComponent } from "@/src/types/IComponent";
 import { MaterialIcons } from "@expo/vector-icons";
 import React from "react";
 import { TouchableOpacity, View } from "react-native";
@@ -8,7 +7,13 @@ import { useRouter } from "expo-router";
 import { ROUTES } from "../../routes";
 import { MonthPicker } from "../MonthPicker";
 
-export function Header({ className }: IComponent) {
+export interface IHeader {
+  className?: string;
+  selectMonth: number;
+  setSelectMonth: (value: number) => void;
+}
+
+export function Header({ selectMonth, setSelectMonth, className }: IHeader) {
   const router = useRouter();
   const componentStyle = style(`gap-4 flex flex-row items-center `, className);
   const styleArrow = style("text-slate-400 w-8 h-8");
@@ -27,7 +32,11 @@ export function Header({ className }: IComponent) {
         <MaterialIcons name="close" size={30} style={styleArrow} />
       </TouchableOpacity>
 
-      <MonthPicker className="flex-1" />
+      <MonthPicker
+        className="flex-1"
+        selectMonth={selectMonth}
+        setSelectMonth={setSelectMonth}
+      />
     </View>
   );
 }

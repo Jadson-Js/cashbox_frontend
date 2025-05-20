@@ -6,27 +6,24 @@ import { TouchableOpacity, View } from "react-native";
 import tw, { style } from "twrnc";
 import { TransactionType } from "../constants/enums";
 import { shadow } from "../constants/styles";
-import { ITransaction } from "../services/transaction.service";
 import { CustomText } from "./ui/CustomText";
 
 export interface ITypeSelector {
-  data: ITransaction;
-  setData: (value: ITransaction) => void;
+  type: TransactionType;
+  setType: (value: TransactionType) => void;
   className?: string;
 }
 
-export function TypeSelector({ data, setData, className }: ITypeSelector) {
+export function TypeSelector({ type, setType, className }: ITypeSelector) {
   const params = useGlobalSearchParams();
 
   React.useEffect(() => {
     if (!params.type) return;
-    setData({
-      ...data,
-      type:
-        params.type === TransactionType.INCOME
-          ? TransactionType.INCOME
-          : TransactionType.EXPENSE,
-    });
+    setType(
+      params.type === TransactionType.INCOME
+        ? TransactionType.INCOME
+        : TransactionType.EXPENSE,
+    );
   }, [params]);
 
   const viewBase = style(
@@ -39,7 +36,7 @@ export function TypeSelector({ data, setData, className }: ITypeSelector) {
   const iconSelected = style("text-white");
   const iconNotSelected = style("text-slate-400");
 
-  const isIncome = data.type === TransactionType.INCOME;
+  const isIncome = type === TransactionType.INCOME;
 
   return (
     <View
@@ -47,7 +44,7 @@ export function TypeSelector({ data, setData, className }: ITypeSelector) {
       style={[shadow, tw`${className || ""}`]}
     >
       <TouchableOpacity
-        onPress={() => setData({ ...data, type: TransactionType.INCOME })}
+        onPress={() => setType(TransactionType.INCOME)}
         style={[viewBase, isIncome && viewSelected]}
       >
         <MaterialCommunityIcons
@@ -63,7 +60,7 @@ export function TypeSelector({ data, setData, className }: ITypeSelector) {
       </TouchableOpacity>
 
       <TouchableOpacity
-        onPress={() => setData({ ...data, type: TransactionType.EXPENSE })}
+        onPress={() => setType(TransactionType.EXPENSE)}
         style={[viewBase, !isIncome && viewSelected]}
       >
         <MaterialCommunityIcons

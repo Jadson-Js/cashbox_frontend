@@ -3,6 +3,7 @@ import { Chart } from "@/src/components/metrics/Chart";
 import { Header } from "@/src/components/metrics/Header";
 import { TypeSelector } from "@/src/components/TypeSelector";
 import { TransactionType } from "@/src/constants/enums";
+import React from "react";
 import {
   Keyboard,
   KeyboardAvoidingView,
@@ -13,6 +14,11 @@ import {
 } from "react-native";
 
 export default function MetricsScreen() {
+  const [selectMonth, setSelectMonth] = React.useState(new Date().getMonth());
+  const [type, setType] = React.useState<TransactionType>(
+    TransactionType.INCOME,
+  );
+
   return (
     <View className="h-full bg-white relative">
       <KeyboardAvoidingView
@@ -28,11 +34,15 @@ export default function MetricsScreen() {
             }}
             keyboardShouldPersistTaps="handled"
           >
-            <Header className="mb-8" />
+            <Header
+              className="mb-8"
+              selectMonth={selectMonth}
+              setSelectMonth={setSelectMonth}
+            />
             <View className="flex flex-col gap-8">
-              <TypeSelector />
+              <TypeSelector type={type} setType={(value) => setType(value)} />
               <Chart />
-              <TransactionList type={TransactionType.INCOME} />
+              <TransactionList type={type} selectMonth={selectMonth} />
             </View>
           </ScrollView>
         </TouchableWithoutFeedback>
