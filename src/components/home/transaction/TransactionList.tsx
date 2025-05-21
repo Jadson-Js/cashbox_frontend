@@ -98,7 +98,11 @@ export function TransactionList({
         />
 
         {showSeeMore && (
-          <TouchableOpacity onPress={() => navigate(ROUTES.METRICS)}>
+          <TouchableOpacity
+            onPress={() =>
+              navigate({ pathname: ROUTES.METRICS, params: { type } })
+            }
+          >
             <CustomText content="See more" size="S" className="" />
           </TouchableOpacity>
         )}

@@ -41,7 +41,7 @@ export default function MetricsScreen() {
             />
             <View className="flex flex-col gap-8">
               <TypeSelector type={type} setType={(value) => setType(value)} />
-              <Chart />
+              <Chart type={type} selectMonth={selectMonth} />
               <TransactionList type={type} selectMonth={selectMonth} />
             </View>
           </ScrollView>

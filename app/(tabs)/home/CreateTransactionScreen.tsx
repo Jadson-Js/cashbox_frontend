@@ -6,6 +6,7 @@ import { TransactionType } from "@/src/constants/enums";
 import { useTransaction } from "@/src/hooks/useTransaction";
 import { ROUTES } from "@/src/routes";
 import { ITransaction } from "@/src/services/transaction.service";
+import { formatDate } from "@/src/utils/formatDate";
 import { useRouter } from "expo-router";
 import React from "react";
 import {
@@ -24,7 +25,7 @@ export default function TransactionScreen() {
     amount: 0,
     type: TransactionType.INCOME,
     description: "",
-    transaction_date: "08/03/2005",
+    transaction_date: formatDate(new Date()),
     category_id: "81dbcbc0-b7f3-4fae-a101-55949337b2da",
   });
 

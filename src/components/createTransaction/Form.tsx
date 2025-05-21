@@ -1,4 +1,4 @@
-import { ICategory } from "@/src/api/category";
+import { ICategoryData } from "@/src/api/category";
 import { colors } from "@/src/constants/colors";
 import { useCategories } from "@/src/context/CategoryContext";
 import { ROUTES } from "@/src/routes";
@@ -24,7 +24,7 @@ export function Form({ data, setData, className }: IForm) {
   const params = useGlobalSearchParams();
   const { categories, setUpdate } = useCategories();
   const [selectCategory, setSelectCategory] = React.useState<
-    ICategory | undefined
+    ICategoryData | undefined
   >(undefined);
 
   const handleChosenCategory = () => {
