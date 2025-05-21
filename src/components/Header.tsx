@@ -1,20 +1,21 @@
-import { IComponent } from "@/src/types/IComponent";
 import { MaterialIcons } from "@expo/vector-icons";
 import React from "react";
 import { TouchableOpacity, View } from "react-native";
-import { style } from "twrnc";
+import tw from "twrnc";
 
 import { useRouter } from "expo-router";
 import { ROUTES } from "../routes";
 import { CustomText } from "./ui/CustomText";
 
-export function Header({ className }: IComponent) {
+export interface IHeader {
+  className?: string;
+  title: string;
+  action: string;
+  onPressAction: () => void;
+}
+
+export function Header({ title, action, onPressAction, className }: IHeader) {
   const router = useRouter();
-  const componentStyle = style(
-    `flex flex-row justify-between items-center`,
-    className,
-  );
-  const styleArrow = style("text-slate-400 w-8 h-8");
 
   const handleExit = () => {
     if (router.canGoBack()) {
@@ -25,17 +26,20 @@ export function Header({ className }: IComponent) {
   };
 
   return (
-    <View style={componentStyle}>
+    <View style={tw`flex-row justify-between items-center ${className || ""}`}>
       <TouchableOpacity onPress={handleExit}>
-        <MaterialIcons name="close" size={30} style={styleArrow} />
+        <MaterialIcons
+          name="close"
+          size={30}
+          style={tw`text-slate-400 w-8 h-8`}
+        />
       </TouchableOpacity>
 
-      <CustomText
-        content="New Transaction"
-        size="MB"
-        className="text-slate-600"
-      />
-      <CustomText content="Save" size="MB" />
+      <CustomText content={title} size="MB" className="text-slate-600" />
+
+      <TouchableOpacity onPress={onPressAction}>
+        <CustomText content={action} size="MB" />
+      </TouchableOpacity>
     </View>
   );
 }

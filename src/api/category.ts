@@ -4,10 +4,17 @@ import api from "./axios";
 export interface IGetCategoriesRequest {
   token: string;
 }
+export type IGetCategoriesResponse = ICategoryData[];
 
-export type IGetCategoriesResponse = ICategory[];
+export interface ICreateCategorRequest {
+  token: string;
+  title: string;
+  icon_name: string;
+  icon_color: string;
+}
+export type ICreateCategoryResponse = ICategoryData;
 
-export interface ICategory {
+export interface ICategoryData {
   id: string;
   title: string;
   icon_name: string;
@@ -25,4 +32,21 @@ export const getCategories = ({
       Authorization: `Bearer ${token}`,
     },
   });
+};
+
+export const postCategory = ({
+  token,
+  title,
+  icon_name,
+  icon_color,
+}: ICreateCategorRequest): Promise<AxiosResponse> => {
+  return api.post(
+    "/categories",
+    { title, icon_name, icon_color },
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    },
+  );
 };

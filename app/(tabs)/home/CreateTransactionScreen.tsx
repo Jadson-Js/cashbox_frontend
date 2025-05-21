@@ -49,7 +49,12 @@ export default function TransactionScreen() {
             }}
             keyboardShouldPersistTaps="handled"
           >
-            <Header className="mb-8" />
+            <Header
+              title={"New trasaction"}
+              action={"Save"}
+              onPressAction={handleCreateTransaction}
+              className="mb-8"
+            />
             <TypeSelector
               className="mb-16"
               type={data.type}

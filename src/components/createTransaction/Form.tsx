@@ -22,7 +22,7 @@ export interface IForm {
 export function Form({ data, setData, className }: IForm) {
   const router = useRouter();
   const params = useGlobalSearchParams();
-  const { categories } = useCategories();
+  const { categories, setUpdate } = useCategories();
   const [selectCategory, setSelectCategory] = React.useState<
     ICategory | undefined
   >(undefined);
@@ -30,6 +30,10 @@ export function Form({ data, setData, className }: IForm) {
   const handleChosenCategory = () => {
     router.navigate(ROUTES.SELECT_CATEGORY);
   };
+
+  React.useEffect(() => {
+    setUpdate(true);
+  }, []);
 
   React.useEffect(() => {
     if (!params.id || categories.length === 0) return;

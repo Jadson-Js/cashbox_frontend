@@ -5,6 +5,7 @@ import { categoryService } from "../services/category.service";
 interface CategoriesContextType {
   categories: IGetCategoriesResponse;
   loading: boolean;
+  setUpdate: (value: boolean) => void;
 }
 
 const CategoriesContext = createContext<CategoriesContextType | undefined>(
@@ -14,6 +15,7 @@ const CategoriesContext = createContext<CategoriesContextType | undefined>(
 export function CategoriesProvider({ children }: any) {
   const [categories, setCategories] = useState<IGetCategoriesResponse>([]);
   const [loading, setLoading] = useState(true);
+  const [update, setUpdate] = useState(false);
 
   useEffect(() => {
     // Simule ou chame sua API real aqui
@@ -30,10 +32,12 @@ export function CategoriesProvider({ children }: any) {
     }
 
     fetchCategories();
-  }, []);
+
+    setUpdate(false);
+  }, [update]);
 
   return (
-    <CategoriesContext.Provider value={{ categories, loading }}>
+    <CategoriesContext.Provider value={{ categories, loading, setUpdate }}>
       {children}
     </CategoriesContext.Provider>
   );

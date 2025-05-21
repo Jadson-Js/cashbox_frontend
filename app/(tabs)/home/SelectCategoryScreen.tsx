@@ -16,7 +16,12 @@ export default function SelectCategoryScreen() {
         }}
         keyboardShouldPersistTaps="handled"
       >
-        <Header className="mb-8" />
+        <Header
+          title={"Categories"}
+          action={"+ New"}
+          onPressAction={() => navigate(ROUTES.CREATE_CATEGORY)}
+          className="mb-8"
+        />
 
         <CategoryList />
       </ScrollView>
