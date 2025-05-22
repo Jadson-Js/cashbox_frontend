@@ -16,6 +16,10 @@ export function CustomInputNumber({
   placeholder,
   className = "",
 }: ICustomInputNumber) {
+  React.useEffect(() => {
+    setDisplayValue(formatNumberToCurrency(value));
+  }, [value]);
+
   const [displayValue, setDisplayValue] = React.useState(
     formatNumberToCurrency(value),
   );

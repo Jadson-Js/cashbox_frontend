@@ -27,16 +27,8 @@ export function Form({ data, setData, className }: IForm) {
     ICategoryData | undefined
   >(undefined);
 
-  const handleChosenCategory = () => {
-    router.navigate(ROUTES.SELECT_CATEGORY);
-  };
-
   React.useEffect(() => {
-    setUpdate(true);
-  }, []);
-
-  React.useEffect(() => {
-    if (!params.category_id || categories.length === 0) return;
+    if (!params.category_id && categories.length !== 0) return;
 
     const foundCategory = categories.find(
       (item) => item.id === params.category_id,
@@ -48,7 +40,11 @@ export function Form({ data, setData, className }: IForm) {
       ...data,
       category_id: foundCategory.id,
     });
-  }, []);
+
+    setUpdate(true);
+  }, [params]);
+
+  console.log(data.amount);
 
   return (
     <View style={tw`${className || ""}`}>
@@ -56,14 +52,14 @@ export function Form({ data, setData, className }: IForm) {
         placeholder="R$0,00"
         className={`text-3xl font-bold text-center mb-12 text-[${colors.primary}]`}
         value={data.amount}
-        setValue={(value) => setData({ ...data, amount: Number(value) })}
+        setValue={(value) => setData({ ...data, amount: value })}
       />
 
       <View className="flex flex-col gap-4 ">
         <View className="flex flex-row justify-between items-center border-b border-slate-200 pb-4 ">
           <CustomText content="Category" size="MB" className="text-slate-600" />
           <TouchableOpacity
-            onPress={handleChosenCategory}
+            onPress={() => router.navigate(ROUTES.SELECT_CATEGORY)}
             className="flex flex-row items-center "
           >
             <CustomText content={selectCategory?.title || "Chossen"} size="M" />

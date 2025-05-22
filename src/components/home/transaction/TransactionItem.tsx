@@ -6,8 +6,8 @@ import { useCategories } from "@/src/context/CategoryContext";
 import { ROUTES } from "@/src/routes";
 import { formatDate } from "@/src/utils/formatDate";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-import { Link } from "expo-router";
-import { View } from "react-native";
+import { useRouter } from "expo-router";
+import { TouchableOpacity, View } from "react-native";
 import tw from "twrnc";
 import { CustomText } from "../../ui/CustomText";
 
@@ -28,6 +28,7 @@ export function TransactionItem({
   transactionDate,
   transactionType,
 }: ITransactionItem) {
+  const router = useRouter();
   const { categories } = useCategories();
   const category: ICategoryData | undefined = categories.find(
     (item) => item.id === categoryId,
@@ -39,11 +40,13 @@ export function TransactionItem({
   const dateFormated = formatDate(new Date(transactionDate));
 
   return (
-    <Link
-      href={{
-        pathname: ROUTES.TRANSACTION,
-        params: { transaction_id: id, category_id: categoryId },
-      }}
+    <TouchableOpacity
+      onPress={() =>
+        router.push({
+          pathname: ROUTES.TRANSACTION,
+          params: { transaction_id: id, category_id: categoryId },
+        })
+      }
       className="border rounded-3xl bg-white border-slate-200 p-4 flex flex-row items-center gap-4"
       style={shadow}
     >
@@ -74,6 +77,6 @@ export function TransactionItem({
         <CustomText content={amountFormated} size="S" className={styleAmount} />
         <CustomText content={dateFormated} size="XS" />
       </View>
-    </Link>
+    </TouchableOpacity>
   );
 }

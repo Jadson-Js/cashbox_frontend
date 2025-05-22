@@ -3,6 +3,7 @@ import { Header } from "@/src/components/Header";
 import { TypeSelector } from "@/src/components/TypeSelector";
 import { CustomButton } from "@/src/components/ui/CustomButton";
 import { TransactionType } from "@/src/constants/enums";
+import { useTransactions } from "@/src/context/TransactionContext";
 import { useTransaction } from "@/src/hooks/useTransaction";
 import { ROUTES } from "@/src/routes";
 import { ITransaction } from "@/src/services/transaction.service";
@@ -21,13 +22,14 @@ import {
 export default function TransactionScreen() {
   const router = useRouter();
   const params = useGlobalSearchParams();
-  const { error, createTransaction } = useTransaction();
+  const { transactions, setUpdate } = useTransactions();
+  const { createTransaction } = useTransaction();
   const [data, setData] = React.useState<ITransaction>({
     amount: 0,
     type: TransactionType.INCOME,
     description: "",
     transaction_date: formatDate(new Date()),
-    category_id: "81dbcbc0-b7f3-4fae-a101-55949337b2da",
+    category_id: "",
   });
   const [isEditMode, setIsEditMode] = React.useState(false);
   const classButton = `absolute bottom-8 left-0 right-0 flex items-center mx-8`;
@@ -54,13 +56,26 @@ export default function TransactionScreen() {
   };
 
   const handleCreateTransaction = () => {
-    console.log(data);
     createTransaction(data);
+    setUpdate(true);
     router.push(ROUTES.HOME);
   };
 
   React.useEffect(() => {
-    if (!params.trasaction_id && !params.category_id) return;
+    if (!params.transaction_id && !params.category_id) return;
+
+    const foundTransaction = transactions.find(
+      (item) => item.id === params.transaction_id,
+    );
+    if (!foundTransaction) return;
+
+    setData({
+      ...data,
+      amount: Number(foundTransaction.amount),
+      description: foundTransaction.description,
+      transaction_date: formatDate(new Date(foundTransaction.transaction_date)),
+      type: foundTransaction.type,
+    });
 
     setIsEditMode(true);
   }, []);
