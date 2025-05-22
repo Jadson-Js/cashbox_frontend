@@ -3,16 +3,18 @@ import { ColorSelector } from "@/src/components/createCategory/ColorSelector";
 import { IconSelector } from "@/src/components/createCategory/IconSelector";
 
 import { Header } from "@/src/components/Header";
+import { CustomButton } from "@/src/components/ui/CustomButton";
 import { colors } from "@/src/constants/colors";
 import { useCategory } from "@/src/hooks/useCategory";
 import { ROUTES } from "@/src/routes";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-import { useRouter } from "expo-router";
+import { useGlobalSearchParams, useRouter } from "expo-router";
 import React from "react";
 import { ScrollView, View } from "react-native";
 
 export default function CreateCategoryScreen() {
   const router = useRouter();
+  const params = useGlobalSearchParams();
   const { error, createCategory } = useCategory();
   const [title, setTitle] = React.useState<string>("Shopping");
   const [iconName, setIconName] =
@@ -20,6 +22,31 @@ export default function CreateCategoryScreen() {
   const [iconColor, setIconColor] = React.useState<
     (typeof colors)[keyof typeof colors]
   >(colors.primary);
+  const [isEditMode, setIsEditMode] = React.useState(false);
+
+  const classButton = `absolute bottom-8 left-0 right-0 flex items-center mx-8`;
+
+  const buttonCreate = () => {
+    return (
+      <CustomButton
+        content="Create new"
+        onPress={handleCreateCategory}
+        className={classButton}
+      />
+    );
+  };
+  const buttonEdit = () => {
+    return (
+      <View className={classButton + " flex flex-col gap-4"}>
+        <CustomButton content="Update" onPress={handleCreateCategory} />
+        <CustomButton
+          content="Delete"
+          onPress={handleCreateCategory}
+          isOutline={true}
+        />
+      </View>
+    );
+  };
 
   const handleCreateCategory = async () => {
     const category = await createCategory({
@@ -35,6 +62,12 @@ export default function CreateCategoryScreen() {
       },
     });
   };
+
+  React.useEffect(() => {
+    if (!params.trasaction_id && !params.category_id) return;
+
+    setIsEditMode(true);
+  }, []);
 
   return (
     <View className="h-full bg-white relative">
@@ -64,6 +97,8 @@ export default function CreateCategoryScreen() {
           <IconSelector setIconName={(value) => setIconName(value)} />
         </View>
       </ScrollView>
+
+      {isEditMode && buttonEdit()}
     </View>
   );
 }

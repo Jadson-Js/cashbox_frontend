@@ -36,9 +36,11 @@ export function Form({ data, setData, className }: IForm) {
   }, []);
 
   React.useEffect(() => {
-    if (!params.id || categories.length === 0) return;
+    if (!params.category_id || categories.length === 0) return;
 
-    const foundCategory = categories.find((item) => item.id === params.id);
+    const foundCategory = categories.find(
+      (item) => item.id === params.category_id,
+    );
     if (!foundCategory) return;
 
     setSelectCategory(foundCategory);
@@ -46,7 +48,7 @@ export function Form({ data, setData, className }: IForm) {
       ...data,
       category_id: foundCategory.id,
     });
-  }, [params, categories]);
+  }, []);
 
   return (
     <View style={tw`${className || ""}`}>

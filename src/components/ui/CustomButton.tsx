@@ -1,23 +1,38 @@
 import { colors } from "@/src/constants/colors";
 import React from "react";
 import { TouchableOpacity } from "react-native";
-import { style } from "twrnc";
-import { ICustomButton } from "../../types/ui/ICustomButton";
+import tw from "twrnc";
 import { CustomText } from "./CustomText";
 
-export function CustomButton({ content, onPress, className }: ICustomButton) {
-  const containerStyle = style(className, `bg-[${colors.primary}]`);
+export interface ICustomButton {
+  className?: string;
+  content: string;
+  onPress: () => void;
+  isOutline?: boolean;
+}
 
+export function CustomButton({
+  content,
+  onPress,
+  className,
+  isOutline = false,
+}: ICustomButton) {
   return (
     <TouchableOpacity
-      className={`px-12 py-2 rounded-3xl self-stretch`}
-      style={containerStyle}
+      className={`px-12 py-2 rounded-3xl self-stretch border-`}
+      style={tw`${className || ""} bg-[${
+        !isOutline ? colors.primary : "#FFF"
+      }] border border-2 border-${
+        !isOutline ? `[${colors.primary}]` : `slate-400`
+      }`}
       onPress={onPress}
     >
       <CustomText
         content={content}
         size="SB"
-        className="uppercase text-white text-center"
+        className={`uppercase ${
+          !isOutline ? `text-white` : `text-slate-600`
+        } text-center`}
       />
     </TouchableOpacity>
   );

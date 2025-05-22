@@ -7,7 +7,7 @@ import { useTransaction } from "@/src/hooks/useTransaction";
 import { ROUTES } from "@/src/routes";
 import { ITransaction } from "@/src/services/transaction.service";
 import { formatDate } from "@/src/utils/formatDate";
-import { useRouter } from "expo-router";
+import { useGlobalSearchParams, useRouter } from "expo-router";
 import React from "react";
 import {
   Keyboard,
@@ -20,6 +20,7 @@ import {
 
 export default function TransactionScreen() {
   const router = useRouter();
+  const params = useGlobalSearchParams();
   const { error, createTransaction } = useTransaction();
   const [data, setData] = React.useState<ITransaction>({
     amount: 0,
@@ -28,12 +29,41 @@ export default function TransactionScreen() {
     transaction_date: formatDate(new Date()),
     category_id: "81dbcbc0-b7f3-4fae-a101-55949337b2da",
   });
+  const [isEditMode, setIsEditMode] = React.useState(false);
+  const classButton = `absolute bottom-8 left-0 right-0 flex items-center mx-8`;
+  const buttonCreate = () => {
+    return (
+      <CustomButton
+        content="Create new"
+        onPress={handleCreateTransaction}
+        className={classButton}
+      />
+    );
+  };
+  const buttonEdit = () => {
+    return (
+      <View className={classButton + " flex flex-col gap-4"}>
+        <CustomButton content="Update" onPress={handleCreateTransaction} />
+        <CustomButton
+          content="Delete"
+          onPress={handleCreateTransaction}
+          isOutline={true}
+        />
+      </View>
+    );
+  };
 
   const handleCreateTransaction = () => {
     console.log(data);
     createTransaction(data);
     router.push(ROUTES.HOME);
   };
+
+  React.useEffect(() => {
+    if (!params.trasaction_id && !params.category_id) return;
+
+    setIsEditMode(true);
+  }, []);
 
   return (
     <View className="h-full bg-white relative">
@@ -66,11 +96,7 @@ export default function TransactionScreen() {
         </TouchableWithoutFeedback>
       </KeyboardAvoidingView>
 
-      <CustomButton
-        content="Create new"
-        onPress={handleCreateTransaction}
-        className="absolute bottom-8 left-0 right-0 flex items-center mx-8"
-      />
+      {!isEditMode ? buttonCreate() : buttonEdit()}
     </View>
   );
 }

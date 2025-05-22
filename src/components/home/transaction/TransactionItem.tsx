@@ -1,15 +1,18 @@
-import { ICategory } from "@/src/api/category";
+import { ICategoryData } from "@/src/api/category";
 import { colors } from "@/src/constants/colors";
 import { TransactionType } from "@/src/constants/enums";
 import { shadow } from "@/src/constants/styles";
 import { useCategories } from "@/src/context/CategoryContext";
+import { ROUTES } from "@/src/routes";
 import { formatDate } from "@/src/utils/formatDate";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { Link } from "expo-router";
 import { View } from "react-native";
 import tw from "twrnc";
 import { CustomText } from "../../ui/CustomText";
 
 export interface ITransactionItem {
+  id: string;
   amount: number;
   categoryId: string;
   description: string;
@@ -18,6 +21,7 @@ export interface ITransactionItem {
 }
 
 export function TransactionItem({
+  id,
   amount,
   categoryId,
   description,
@@ -25,7 +29,7 @@ export function TransactionItem({
   transactionType,
 }: ITransactionItem) {
   const { categories } = useCategories();
-  const category: ICategory | undefined = categories.find(
+  const category: ICategoryData | undefined = categories.find(
     (item) => item.id === categoryId,
   );
 
@@ -35,7 +39,11 @@ export function TransactionItem({
   const dateFormated = formatDate(new Date(transactionDate));
 
   return (
-    <View
+    <Link
+      href={{
+        pathname: ROUTES.TRANSACTION,
+        params: { transaction_id: id, category_id: categoryId },
+      }}
       className="border rounded-3xl bg-white border-slate-200 p-4 flex flex-row items-center gap-4"
       style={shadow}
     >
@@ -66,6 +74,6 @@ export function TransactionItem({
         <CustomText content={amountFormated} size="S" className={styleAmount} />
         <CustomText content={dateFormated} size="XS" />
       </View>
-    </View>
+    </Link>
   );
 }

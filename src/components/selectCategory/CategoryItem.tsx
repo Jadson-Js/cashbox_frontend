@@ -2,7 +2,7 @@ import { colors } from "@/src/constants/colors";
 import { shadow } from "@/src/constants/styles";
 import { ROUTES } from "@/src/routes";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-import { Link } from "expo-router";
+import { Link, usePathname, useRouter } from "expo-router";
 import { View } from "react-native";
 import tw from "twrnc";
 import { CustomText } from "../ui/CustomText";
@@ -20,23 +20,42 @@ export function CategoryItem({
   iconColor,
   title,
 }: ICategoryItem) {
-  const categoryStyle = tw`flex flex-row items-center gap-4 p-4 rounded-3xl border border-slate-200 bg-white`;
-  const bgIconColor = tw`bg-[${iconColor + 40}]`;
-  const fillIconColo = tw`text-[${iconColor}]`;
+  const router = useRouter();
+  const pathname = usePathname();
 
   return (
-    <Link href={{ pathname: ROUTES.TRANSACTION, params: { id } }}>
-      <View style={[shadow, categoryStyle]}>
-        <View style={bgIconColor} className="rounded-3xl p-2">
+    <View
+      style={[
+        shadow,
+        tw`flex flex-row  items-center  p-4 rounded-3xl border border-slate-200 bg-white`,
+      ]}
+    >
+      <Link
+        href={{ pathname: ROUTES.TRANSACTION, params: { category_id: id } }}
+        className="flex flex-row items-center gap-4 flex-1"
+      >
+        <View
+          style={tw`bg-[${iconColor + 40}]`}
+          className="rounded-3xl p-2 flex-shrink-0"
+        >
           <MaterialCommunityIcons
             name={iconName}
             size={25}
-            style={fillIconColo}
+            style={tw`text-[${iconColor}]`}
           />
         </View>
-
         <CustomText content={title} size="S" className="text-slate-600" />
-      </View>
-    </Link>
+      </Link>
+
+      <Link
+        href={{ pathname: ROUTES.CREATE_CATEGORY, params: { category_id: id } }}
+      >
+        <MaterialCommunityIcons
+          name="square-edit-outline"
+          size={25}
+          color="#94a3b8"
+        />
+      </Link>
+    </View>
   );
 }

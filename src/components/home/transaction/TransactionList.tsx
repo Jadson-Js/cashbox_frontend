@@ -76,6 +76,7 @@ export function TransactionList({
         keyExtractor={(_, index) => index.toString()}
         renderItem={({ item }) => (
           <TransactionItem
+            id={item.id}
             amount={item.amount}
             categoryId={item.category_id}
             description={item.description}
