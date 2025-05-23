@@ -29,6 +29,12 @@ export interface IPatchTransactionRequest {
 }
 export type IPatchTransactionResponse = ITransactionData;
 
+// DELETE TRANSACTIONS
+export interface IDeleteTransactionRequest {
+  token: string;
+  id: string;
+}
+
 // TRANSACTION DATA
 export interface ITransactionData {
   id: string;

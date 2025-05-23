@@ -36,7 +36,7 @@ export function Form({ data, setData, className }: IForm) {
 
     setSelectCategory(foundCategory);
 
-    if (data.category_id !== params.category_id) return;
+    if (data.category_id === params.category_id) return;
 
     setData({
       ...data,
@@ -65,7 +65,12 @@ export function Form({ data, setData, className }: IForm) {
             }
             className="flex flex-row items-center "
           >
-            <CustomText content={selectCategory?.title || "Chossen"} size="M" />
+            <CustomText
+              content={
+                !params.category_id ? "Chossen" : selectCategory?.title || ""
+              }
+              size="M"
+            />
             <MaterialCommunityIcons
               name="chevron-right"
               size={30}

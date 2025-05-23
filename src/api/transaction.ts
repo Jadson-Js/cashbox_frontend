@@ -1,5 +1,6 @@
 import { AxiosResponse } from "axios";
 import {
+  IDeleteTransactionRequest,
   IGetTransactionsRequest,
   IPatchTransactionRequest,
   IPostTransactionRequest,
@@ -54,4 +55,15 @@ export const patchTransaction = ({
       },
     },
   );
+};
+
+export const deleteTransaction = ({
+  token,
+  id,
+}: IDeleteTransactionRequest): Promise<AxiosResponse> => {
+  return api.delete("/transactions/id/" + id, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
 };

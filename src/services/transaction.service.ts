@@ -1,5 +1,6 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import {
+  deleteTransaction,
   getTransactions,
   patchTransaction,
   postTransaction,
@@ -11,6 +12,7 @@ import {
 } from "../types/api/transactions.api";
 import {
   ITransactionBodyRequest,
+  ITransactionParamRequest,
   ITransactionUpdateService,
 } from "../types/services/transactions.service";
 
@@ -67,10 +69,29 @@ class TransactionService {
       const response = await patchTransaction({ ...body, token });
 
       if (response.status !== 200) {
-        throw new Error("Post transactions failed");
+        throw new Error("Update transactions failed");
       }
 
       return response.data;
+    } catch (error: any) {
+      throw error;
+    }
+  }
+
+  public async deleteTransaction(
+    body: ITransactionParamRequest,
+  ): Promise<void> {
+    try {
+      const token = await AsyncStorage.getItem("accessToken");
+      if (!token) {
+        throw new Error("No token found");
+      }
+
+      const response = await deleteTransaction({ ...body, token });
+
+      if (response.status !== 204) {
+        throw new Error("Delete transactions failed");
+      }
     } catch (error: any) {
       throw error;
     }

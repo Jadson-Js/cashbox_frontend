@@ -41,18 +41,17 @@ export default function TransactionScreen() {
     );
     if (!transactionFounded) return;
 
-    const data: ITransactionBodyHook = {
+    const setTransactionData: ITransactionBodyHook = {
+      ...data,
       amount: Number(transactionFounded.amount),
       type: transactionFounded.type,
       description: transactionFounded.description,
       transaction_date: formatDate(
         new Date(transactionFounded.transaction_date),
       ),
-      category_id:
-        typeof params.category_id === "string" ? params.category_id : "",
     };
 
-    setData(data);
+    setData(setTransactionData);
   }, [transactions, params]);
 
   return (

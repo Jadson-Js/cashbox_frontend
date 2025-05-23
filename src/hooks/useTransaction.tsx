@@ -5,6 +5,7 @@ import {
   ITransactionBodyHook,
   ITransactionUpdateHook,
 } from "../types/hooks/transactions.hooks";
+import { ITransactionParamRequest } from "../types/services/transactions.service";
 
 export function useTransaction() {
   const { setUpdate } = useTransactions();
@@ -14,6 +15,7 @@ export function useTransaction() {
     body: ITransactionBodyHook,
   ): Promise<void> => {
     try {
+      console.log(body);
       await transactionService.createTransaction({
         ...body,
         transaction_date: new Date(body.transaction_date),
@@ -44,5 +46,19 @@ export function useTransaction() {
     }
   };
 
-  return { error, createTransaction, updateTransaction };
+  const deleteTransaction = async (
+    body: ITransactionParamRequest,
+  ): Promise<void> => {
+    try {
+      await transactionService.deleteTransaction(body);
+
+      setUpdate(true);
+    } catch (error) {
+      console.log(error);
+      setError(true);
+      throw error;
+    }
+  };
+
+  return { error, createTransaction, updateTransaction, deleteTransaction };
 }

@@ -17,7 +17,8 @@ export default function ButtonsTransaction({
   isEditMode = false,
 }: IButtonsTransaction) {
   const router = useRouter();
-  const { createTransaction, updateTransaction } = useTransaction();
+  const { createTransaction, updateTransaction, deleteTransaction } =
+    useTransaction();
 
   const classButton = "absolute bottom-8 left-0 right-0 mx-8";
 
@@ -37,8 +38,10 @@ export default function ButtonsTransaction({
     router.push(ROUTES.HOME);
   };
 
-  const handleDelete = () => {
-    console.log("Delete");
+  const handleDelete = async () => {
+    if (!transaction_id) return;
+    await deleteTransaction({ id: transaction_id });
+    router.push(ROUTES.HOME);
   };
 
   const ButtonsNoEditMode = () => {
