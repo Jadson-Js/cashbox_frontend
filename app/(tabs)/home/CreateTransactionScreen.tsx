@@ -39,6 +39,7 @@ export default function TransactionScreen() {
     const transactionFounded = transactions.find(
       (item: any) => item.id === params.transaction_id,
     );
+    if (!transactionFounded) return;
 
     const data: ITransactionBodyHook = {
       amount: Number(transactionFounded.amount),
@@ -47,10 +48,9 @@ export default function TransactionScreen() {
       transaction_date: formatDate(
         new Date(transactionFounded.transaction_date),
       ),
-      category_id: transactionFounded.category_id,
+      category_id:
+        typeof params.category_id === "string" ? params.category_id : "",
     };
-
-    console.log(data);
 
     setData(data);
   }, [transactions, params]);
@@ -84,7 +84,15 @@ export default function TransactionScreen() {
             <Form data={data} setData={setData} />
           </ScrollView>
         </TouchableWithoutFeedback>
-        <ButtonsTransaction data={data} isEditMode={isEditMode} />
+        <ButtonsTransaction
+          transaction_id={
+            typeof params.transaction_id === "string"
+              ? params.transaction_id
+              : ""
+          }
+          data={data}
+          isEditMode={isEditMode}
+        />
       </KeyboardAvoidingView>
     </View>
   );

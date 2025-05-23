@@ -1,7 +1,7 @@
-import { ITransaction } from "../api/transaction";
+import { IGetTransactionsResponse } from "../types/api/transactions.api";
 
 export function filterTransactionsByMonth(
-  transactions: ITransaction[],
+  transactions: IGetTransactionsResponse,
   month: number,
 ) {
   return transactions.filter((item) => {

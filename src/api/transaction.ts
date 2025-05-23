@@ -46,7 +46,7 @@ export const patchTransaction = ({
   category_id,
 }: IPatchTransactionRequest): Promise<AxiosResponse> => {
   return api.patch(
-    "/transactions/id" + id,
+    "/transactions/id/" + id,
     { amount, type, description, transaction_date, category_id },
     {
       headers: {

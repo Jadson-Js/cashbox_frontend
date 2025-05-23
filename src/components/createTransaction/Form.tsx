@@ -27,7 +27,6 @@ export function Form({ data, setData, className }: IForm) {
   >(undefined);
 
   React.useEffect(() => {
-    console.log("X");
     if (!params.category_id || categories.length === 0) return;
 
     const foundCategory = categories.find(
@@ -37,7 +36,7 @@ export function Form({ data, setData, className }: IForm) {
 
     setSelectCategory(foundCategory);
 
-    if (data.category_id === foundCategory.id) return;
+    if (data.category_id !== params.category_id) return;
 
     setData({
       ...data,
@@ -58,7 +57,12 @@ export function Form({ data, setData, className }: IForm) {
         <View className="flex flex-row justify-between items-center border-b border-slate-200 pb-4 ">
           <CustomText content="Category" size="MB" className="text-slate-600" />
           <TouchableOpacity
-            onPress={() => router.navigate(ROUTES.SELECT_CATEGORY)}
+            onPress={() =>
+              router.navigate({
+                pathname: ROUTES.SELECT_CATEGORY,
+                params: { transaction_id: params.transaction_id },
+              })
+            }
             className="flex flex-row items-center "
           >
             <CustomText content={selectCategory?.title || "Chossen"} size="M" />

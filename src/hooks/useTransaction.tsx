@@ -1,8 +1,10 @@
 import React from "react";
 import { useTransactions } from "../context/TransactionContext";
 import { transactionService } from "../services/transaction.service";
-import { ITransactionBodyHook } from "../types/hooks/transactions.hooks";
-import { ITransactionUpdateService } from "../types/services/transactions.service";
+import {
+  ITransactionBodyHook,
+  ITransactionUpdateHook,
+} from "../types/hooks/transactions.hooks";
 
 export function useTransaction() {
   const { setUpdate } = useTransactions();
@@ -26,10 +28,15 @@ export function useTransaction() {
   };
 
   const updateTransaction = async (
-    body: ITransactionUpdateService,
+    body: ITransactionUpdateHook,
   ): Promise<void> => {
     try {
-      await transactionService.updateTransaction(body);
+      await transactionService.updateTransaction({
+        ...body,
+        transaction_date: new Date(body.transaction_date),
+      });
+
+      setUpdate(true);
     } catch (error) {
       console.log(error);
       setError(true);

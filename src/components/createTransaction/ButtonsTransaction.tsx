@@ -8,14 +8,16 @@ import { CustomButton } from "../ui/CustomButton";
 export interface IButtonsTransaction {
   data: ITransactionBodyHook;
   isEditMode?: boolean;
+  transaction_id?: string;
 }
 
 export default function ButtonsTransaction({
+  transaction_id,
   data,
   isEditMode = false,
 }: IButtonsTransaction) {
   const router = useRouter();
-  const { createTransaction } = useTransaction();
+  const { createTransaction, updateTransaction } = useTransaction();
 
   const classButton = "absolute bottom-8 left-0 right-0 mx-8";
 
@@ -24,8 +26,15 @@ export default function ButtonsTransaction({
     router.push(ROUTES.HOME);
   };
 
-  const handleUpdate = () => {
-    console.log("Update");
+  const handleUpdate = async () => {
+    if (!transaction_id) return;
+    const body = {
+      ...data,
+      id: transaction_id,
+    };
+
+    await updateTransaction(body);
+    router.push(ROUTES.HOME);
   };
 
   const handleDelete = () => {

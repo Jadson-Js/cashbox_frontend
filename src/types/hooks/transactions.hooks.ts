@@ -7,3 +7,11 @@ export interface ITransactionBodyHook {
   transaction_date: string;
   category_id: string;
 }
+
+export interface ITransactionParamsHook {
+  id: string;
+}
+
+export interface ITransactionUpdateHook
+  extends ITransactionParamsHook,
+    ITransactionBodyHook {}

@@ -2,7 +2,7 @@ import { colors } from "@/src/constants/colors";
 import { shadow } from "@/src/constants/styles";
 import { ROUTES } from "@/src/routes";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-import { Link, usePathname, useRouter } from "expo-router";
+import { Link, useGlobalSearchParams, useRouter } from "expo-router";
 import { View } from "react-native";
 import tw from "twrnc";
 import { CustomText } from "../ui/CustomText";
@@ -21,7 +21,7 @@ export function CategoryItem({
   title,
 }: ICategoryItem) {
   const router = useRouter();
-  const pathname = usePathname();
+  const params = useGlobalSearchParams();
 
   return (
     <View
@@ -31,7 +31,10 @@ export function CategoryItem({
       ]}
     >
       <Link
-        href={{ pathname: ROUTES.TRANSACTION, params: { category_id: id } }}
+        href={{
+          pathname: ROUTES.TRANSACTION,
+          params: { transaction_id: params.transaction_id, category_id: id },
+        }}
         className="flex flex-row items-center gap-4 flex-1"
       >
         <View
