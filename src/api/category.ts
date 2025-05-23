@@ -1,27 +1,11 @@
 import { AxiosResponse } from "axios";
+import {
+  IDeleteCategoryRequest,
+  IGetCategoriesRequest,
+  IPatchCategoryRequest,
+  IPostCategoryRequest,
+} from "../types/api/categories.api";
 import api from "./axios";
-
-export interface IGetCategoriesRequest {
-  token: string;
-}
-export type IGetCategoriesResponse = ICategoryData[];
-
-export interface ICreateCategorRequest {
-  token: string;
-  title: string;
-  icon_name: string;
-  icon_color: string;
-}
-export type ICreateCategoryResponse = ICategoryData;
-
-export interface ICategoryData {
-  id: string;
-  title: string;
-  icon_name: string;
-  icon_color: string;
-  created_at: Date;
-  updated_at: Date;
-}
 
 export const getCategories = ({
   token,
@@ -39,7 +23,7 @@ export const postCategory = ({
   title,
   icon_name,
   icon_color,
-}: ICreateCategorRequest): Promise<AxiosResponse> => {
+}: IPostCategoryRequest): Promise<AxiosResponse> => {
   return api.post(
     "/categories",
     { title, icon_name, icon_color },
@@ -49,4 +33,33 @@ export const postCategory = ({
       },
     },
   );
+};
+
+export const patchCategory = ({
+  token,
+  id,
+  title,
+  icon_name,
+  icon_color,
+}: IPatchCategoryRequest): Promise<AxiosResponse> => {
+  return api.patch(
+    "/categories/id/" + id,
+    { title, icon_name, icon_color },
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    },
+  );
+};
+
+export const deleteCategory = ({
+  token,
+  id,
+}: IDeleteCategoryRequest): Promise<AxiosResponse> => {
+  return api.delete("/categories/id/" + id, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
 };
