@@ -1,9 +1,9 @@
 import { createContext, useContext, useEffect, useState } from "react";
-import { IGetTransactionsResponse } from "../api/transaction";
 import { transactionService } from "../services/transaction.service";
+import { IGetTransactionsResponse } from "../types/api/transactions.api";
 
 interface TransactionsContextType {
-  transactions: IGetTransactionsResponse;
+  transactions: IGetTransactionsResponse[];
   loading: boolean;
   setUpdate: (value: boolean) => void;
 }
@@ -13,7 +13,7 @@ const TransactionsContext = createContext<TransactionsContextType | undefined>(
 );
 
 export function TransactionsProvider({ children }: any) {
-  const [transactions, setTransactions] = useState<IGetTransactionsResponse>(
+  const [transactions, setTransactions] = useState<IGetTransactionsResponse[]>(
     [],
   );
   const [loading, setLoading] = useState(true);

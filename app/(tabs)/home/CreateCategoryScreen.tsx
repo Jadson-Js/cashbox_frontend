@@ -28,15 +28,6 @@ export default function CreateCategoryScreen() {
 
   const classButton = `absolute bottom-8 left-0 right-0 flex items-center mx-8`;
 
-  const buttonCreate = () => {
-    return (
-      <CustomButton
-        content="Create new"
-        onPress={handleCreateCategory}
-        className={classButton}
-      />
-    );
-  };
   const buttonEdit = () => {
     return (
       <View className={classButton + " flex flex-col gap-4"}>

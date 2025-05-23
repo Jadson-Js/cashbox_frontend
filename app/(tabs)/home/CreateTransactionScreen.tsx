@@ -1,12 +1,10 @@
+import ButtonsTransaction from "@/src/components/createTransaction/ButtonsTransaction";
 import { Form } from "@/src/components/createTransaction/Form";
 import { Header } from "@/src/components/Header";
 import { TypeSelector } from "@/src/components/TypeSelector";
-import { CustomButton } from "@/src/components/ui/CustomButton";
 import { TransactionType } from "@/src/constants/enums";
 import { useTransactions } from "@/src/context/TransactionContext";
-import { useTransaction } from "@/src/hooks/useTransaction";
-import { ROUTES } from "@/src/routes";
-import { ITransaction } from "@/src/services/transaction.service";
+import { ITransactionBodyHook } from "@/src/types/hooks/transactions.hooks";
 import { formatDate } from "@/src/utils/formatDate";
 import { useGlobalSearchParams, useRouter } from "expo-router";
 import React from "react";
@@ -22,63 +20,40 @@ import {
 export default function TransactionScreen() {
   const router = useRouter();
   const params = useGlobalSearchParams();
-  const { transactions, setUpdate } = useTransactions();
-  const { createTransaction } = useTransaction();
-  const [data, setData] = React.useState<ITransaction>({
+
+  const { transactions } = useTransactions();
+
+  const [data, setData] = React.useState<ITransactionBodyHook>({
     amount: 0,
     type: TransactionType.INCOME,
     description: "",
     transaction_date: formatDate(new Date()),
     category_id: "",
   });
-  const [isEditMode, setIsEditMode] = React.useState(false);
-  const classButton = `absolute bottom-8 left-0 right-0 flex items-center mx-8`;
-  const buttonCreate = () => {
-    return (
-      <CustomButton
-        content="Create new"
-        onPress={handleCreateTransaction}
-        className={classButton}
-      />
-    );
-  };
-  const buttonEdit = () => {
-    return (
-      <View className={classButton + " flex flex-col gap-4"}>
-        <CustomButton content="Update" onPress={handleCreateTransaction} />
-        <CustomButton
-          content="Delete"
-          onPress={handleCreateTransaction}
-          isOutline={true}
-        />
-      </View>
-    );
-  };
-
-  const handleCreateTransaction = () => {
-    createTransaction(data);
-    setUpdate(true);
-    router.push(ROUTES.HOME);
-  };
+  const [isEditMode, setIsEditMode] = React.useState<boolean>(false);
 
   React.useEffect(() => {
-    if (!params.transaction_id && !params.category_id) return;
-
-    const foundTransaction = transactions.find(
-      (item) => item.id === params.transaction_id,
-    );
-    if (!foundTransaction) return;
-
-    setData({
-      ...data,
-      amount: Number(foundTransaction.amount),
-      description: foundTransaction.description,
-      transaction_date: formatDate(new Date(foundTransaction.transaction_date)),
-      type: foundTransaction.type,
-    });
-
+    if (!params.transaction_id || transactions.length === 0) return;
     setIsEditMode(true);
-  }, []);
+
+    const transactionFounded = transactions.find(
+      (item: any) => item.id === params.transaction_id,
+    );
+
+    const data: ITransactionBodyHook = {
+      amount: Number(transactionFounded.amount),
+      type: transactionFounded.type,
+      description: transactionFounded.description,
+      transaction_date: formatDate(
+        new Date(transactionFounded.transaction_date),
+      ),
+      category_id: transactionFounded.category_id,
+    };
+
+    console.log(data);
+
+    setData(data);
+  }, [transactions, params]);
 
   return (
     <View className="h-full bg-white relative">
@@ -98,7 +73,7 @@ export default function TransactionScreen() {
             <Header
               title={"New trasaction"}
               action={"Save"}
-              onPressAction={handleCreateTransaction}
+              onPressAction={() => {}}
               className="mb-8"
             />
             <TypeSelector
@@ -109,9 +84,8 @@ export default function TransactionScreen() {
             <Form data={data} setData={setData} />
           </ScrollView>
         </TouchableWithoutFeedback>
+        <ButtonsTransaction data={data} isEditMode={isEditMode} />
       </KeyboardAvoidingView>
-
-      {!isEditMode ? buttonCreate() : buttonEdit()}
     </View>
   );
 }

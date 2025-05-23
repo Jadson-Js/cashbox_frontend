@@ -1,3 +1,3 @@
-export function formatNumberToCurrency(number: number) {
-  return "$" + number.toFixed(2).toString();
+export function formatNumberToCurrency(value: number): string {
+  return "$" + value.toFixed(2).toString();
 }

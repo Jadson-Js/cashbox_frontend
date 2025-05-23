@@ -1,8 +1,7 @@
 import { ICategoryData } from "@/src/api/category";
-import { colors } from "@/src/constants/colors";
 import { useCategories } from "@/src/context/CategoryContext";
 import { ROUTES } from "@/src/routes";
-import { ITransaction } from "@/src/services/transaction.service";
+import { ITransactionBodyHook } from "@/src/types/hooks/transactions.hooks";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { useGlobalSearchParams, useRouter } from "expo-router";
 import React from "react";
@@ -14,21 +13,22 @@ import { CustomInputText } from "../ui/CustomInputText";
 import { CustomText } from "../ui/CustomText";
 
 export interface IForm {
-  data: ITransaction;
-  setData: (value: ITransaction) => void;
+  data: ITransactionBodyHook;
+  setData: (value: ITransactionBodyHook) => void;
   className?: string;
 }
 
 export function Form({ data, setData, className }: IForm) {
   const router = useRouter();
   const params = useGlobalSearchParams();
-  const { categories, setUpdate } = useCategories();
+  const { categories } = useCategories();
   const [selectCategory, setSelectCategory] = React.useState<
     ICategoryData | undefined
   >(undefined);
 
   React.useEffect(() => {
-    if (!params.category_id && categories.length !== 0) return;
+    console.log("X");
+    if (!params.category_id || categories.length === 0) return;
 
     const foundCategory = categories.find(
       (item) => item.id === params.category_id,
@@ -36,21 +36,20 @@ export function Form({ data, setData, className }: IForm) {
     if (!foundCategory) return;
 
     setSelectCategory(foundCategory);
+
+    if (data.category_id === foundCategory.id) return;
+
     setData({
       ...data,
       category_id: foundCategory.id,
     });
-
-    setUpdate(true);
-  }, [params]);
-
-  console.log(data.amount);
+  }, [params, categories.length]);
 
   return (
     <View style={tw`${className || ""}`}>
       <CustomInputNumber
-        placeholder="R$0,00"
-        className={`text-3xl font-bold text-center mb-12 text-[${colors.primary}]`}
+        placeholder="$0,00"
+        className="text-3xl font-bold text-center mb-12"
         value={data.amount}
         setValue={(value) => setData({ ...data, amount: value })}
       />

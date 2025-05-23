@@ -34,7 +34,7 @@ export function CustomInputNumber({
         style: "currency",
         currency: "USD",
       }),
-    ); // Format it
+    );
   };
 
   return (

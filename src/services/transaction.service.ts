@@ -1,22 +1,21 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import {
   getTransactions,
-  ICreateTransactionResponse,
-  IGetTransactionsResponse,
+  patchTransaction,
   postTransaction,
 } from "../api/transaction";
-import { TransactionType } from "../constants/enums";
-
-export interface ITransaction {
-  amount: number;
-  type: (typeof TransactionType)[keyof typeof TransactionType];
-  description: string;
-  transaction_date: string;
-  category_id: string;
-}
+import {
+  IGetTransactionsResponse,
+  IPatchTransactionResponse,
+  IPostTransactionResponse,
+} from "../types/api/transactions.api";
+import {
+  ITransactionBodyRequest,
+  ITransactionUpdateService,
+} from "../types/services/transactions.service";
 
 class TransactionService {
-  public async getTransactions(): Promise<IGetTransactionsResponse> {
+  public async getTransactions(): Promise<IGetTransactionsResponse[]> {
     try {
       const token = await AsyncStorage.getItem("accessToken");
       if (!token) {
@@ -36,24 +35,38 @@ class TransactionService {
   }
 
   public async createTransaction(
-    body: ITransaction,
-  ): Promise<ICreateTransactionResponse> {
+    body: ITransactionBodyRequest,
+  ): Promise<IPostTransactionResponse> {
     try {
       const token = await AsyncStorage.getItem("accessToken");
       if (!token) {
         throw new Error("No token found");
       }
 
-      const { transaction_date, ...restBody } = body;
-      const data = {
-        token,
-        transaction_date: new Date(transaction_date),
-        ...restBody,
-      };
-
-      const response = await postTransaction(data);
+      const response = await postTransaction({ ...body, token });
 
       if (response.status !== 201) {
+        throw new Error("Post transactions failed");
+      }
+
+      return response.data;
+    } catch (error: any) {
+      throw error;
+    }
+  }
+
+  public async updateTransaction(
+    body: ITransactionUpdateService,
+  ): Promise<IPatchTransactionResponse> {
+    try {
+      const token = await AsyncStorage.getItem("accessToken");
+      if (!token) {
+        throw new Error("No token found");
+      }
+
+      const response = await patchTransaction({ ...body, token });
+
+      if (response.status !== 200) {
         throw new Error("Post transactions failed");
       }
 
