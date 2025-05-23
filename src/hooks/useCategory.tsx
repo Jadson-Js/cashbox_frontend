@@ -31,7 +31,6 @@ export function useCategory() {
   const updateCategory = async (body: ICategoryUpdateHook): Promise<void> => {
     try {
       await categoryService.updateCategory(body);
-
       setUpdate(true);
     } catch (error) {
       console.log(error);

@@ -1,9 +1,9 @@
+import ButtonsCategory from "@/src/components/createCategory/ButtonsCategory";
 import { CategorySelector } from "@/src/components/createCategory/CategorySelector";
 import { ColorSelector } from "@/src/components/createCategory/ColorSelector";
 import { IconSelector } from "@/src/components/createCategory/IconSelector";
 
 import { Header } from "@/src/components/Header";
-import { CustomButton } from "@/src/components/ui/CustomButton";
 import { colors } from "@/src/constants/colors";
 import { useCategories } from "@/src/context/CategoryContext";
 import { useCategory } from "@/src/hooks/useCategory";
@@ -26,20 +26,26 @@ export default function CreateCategoryScreen() {
   const [isEditMode, setIsEditMode] = React.useState(false);
   const { categories } = useCategories();
 
-  const classButton = `absolute bottom-8 left-0 right-0 flex items-center mx-8`;
+  React.useEffect(() => {
+    if (!params.category_id) return;
 
-  const buttonEdit = () => {
-    return (
-      <View className={classButton + " flex flex-col gap-4"}>
-        <CustomButton content="Update" onPress={handleCreateCategory} />
-        <CustomButton
-          content="Delete"
-          onPress={handleCreateCategory}
-          isOutline={true}
-        />
-      </View>
+    const foundCategory = categories.find(
+      (item: any) => item.id === params.category_id,
     );
-  };
+    if (!foundCategory) return;
+
+    setIsEditMode(true);
+
+    setTitle(foundCategory.title);
+    setIconName(
+      foundCategory.icon_name as keyof typeof MaterialCommunityIcons.glyphMap,
+    );
+    setIconColor(
+      Object.values(colors).includes(foundCategory.icon_color as any)
+        ? (foundCategory.icon_color as (typeof colors)[keyof typeof colors])
+        : colors.primary,
+    );
+  }, [params, categories.length]);
 
   const handleCreateCategory = async () => {
     const category = await createCategory({
@@ -51,30 +57,10 @@ export default function CreateCategoryScreen() {
     router.push({
       pathname: ROUTES.TRANSACTION,
       params: {
-        id: category.id,
+        category_id: category.id,
       },
     });
   };
-
-  React.useEffect(() => {
-    if (!params.category_id) return;
-
-    const foundCategory = categories.find(
-      (item) => item.id === params.category_id,
-    );
-    if (!foundCategory) return;
-    setTitle(foundCategory.title);
-    setIconName(
-      foundCategory.icon_name as keyof typeof MaterialCommunityIcons.glyphMap,
-    );
-    setIconColor(
-      Object.values(colors).includes(foundCategory.icon_color as any)
-        ? (foundCategory.icon_color as (typeof colors)[keyof typeof colors])
-        : colors.primary,
-    );
-
-    setIsEditMode(true);
-  }, []);
 
   return (
     <View className="h-full bg-white relative">
@@ -105,7 +91,15 @@ export default function CreateCategoryScreen() {
         </View>
       </ScrollView>
 
-      {isEditMode && buttonEdit()}
+      <ButtonsCategory
+        category_id={
+          typeof params.category_id === "string" ? params.category_id : ""
+        }
+        title={title}
+        iconName={iconName}
+        iconColor={iconColor}
+        isEditMode={isEditMode}
+      />
     </View>
   );
 }

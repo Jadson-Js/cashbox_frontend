@@ -35,7 +35,7 @@ export function Form({ data, setData, className }: IForm) {
     if (!foundCategory) return;
 
     setSelectCategory(foundCategory);
-  }, [params, categories.length]);
+  }, [params, categories]);
 
   return (
     <View style={tw`${className || ""}`}>

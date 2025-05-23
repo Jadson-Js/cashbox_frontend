@@ -3,7 +3,7 @@ import { shadow } from "@/src/constants/styles";
 import { ROUTES } from "@/src/routes";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { Link, useGlobalSearchParams, useRouter } from "expo-router";
-import { View } from "react-native";
+import { TouchableOpacity, View } from "react-native";
 import tw from "twrnc";
 import { CustomText } from "../ui/CustomText";
 
@@ -30,10 +30,12 @@ export function CategoryItem({
         tw`flex flex-row  items-center  p-4 rounded-3xl border border-slate-200 bg-white`,
       ]}
     >
-      <Link
-        href={{
-          pathname: ROUTES.TRANSACTION,
-          params: { transaction_id: params.transaction_id, category_id: id },
+      <TouchableOpacity
+        onPress={() => {
+          router.push({
+            pathname: ROUTES.TRANSACTION,
+            params: { transaction_id: params.transaction_id, category_id: id },
+          });
         }}
         className="flex flex-row items-center gap-4 flex-1"
       >
@@ -48,7 +50,7 @@ export function CategoryItem({
           />
         </View>
         <CustomText content={title} size="S" className="text-slate-600" />
-      </Link>
+      </TouchableOpacity>
 
       <Link
         href={{ pathname: ROUTES.CREATE_CATEGORY, params: { category_id: id } }}
