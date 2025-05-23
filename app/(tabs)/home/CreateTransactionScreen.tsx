@@ -28,9 +28,22 @@ export default function TransactionScreen() {
     type: TransactionType.INCOME,
     description: "",
     transaction_date: formatDate(new Date()),
-    category_id: "",
+    category_id: Array.isArray(params.category_id)
+      ? params.category_id[0]
+      : params.category_id || "",
   });
   const [isEditMode, setIsEditMode] = React.useState<boolean>(false);
+
+  React.useEffect(
+    () =>
+      setData({
+        ...data,
+        category_id: Array.isArray(params.category_id)
+          ? params.category_id[0]
+          : params.category_id || "",
+      }),
+    [params],
+  );
 
   React.useEffect(() => {
     if (!params.transaction_id || transactions.length === 0) return;
@@ -42,17 +55,20 @@ export default function TransactionScreen() {
     if (!transactionFounded) return;
 
     const setTransactionData: ITransactionBodyHook = {
-      ...data,
       amount: Number(transactionFounded.amount),
       type: transactionFounded.type,
       description: transactionFounded.description,
       transaction_date: formatDate(
         new Date(transactionFounded.transaction_date),
       ),
+      category_id: Array.isArray(params.category_id)
+        ? params.category_id[0]
+        : params.category_id || "",
     };
 
     setData(setTransactionData);
-  }, [transactions, params]);
+    console.log(setTransactionData);
+  }, [transactions.length, params]);
 
   return (
     <View className="h-full bg-white relative">

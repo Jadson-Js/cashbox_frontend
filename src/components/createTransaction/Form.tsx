@@ -35,13 +35,6 @@ export function Form({ data, setData, className }: IForm) {
     if (!foundCategory) return;
 
     setSelectCategory(foundCategory);
-
-    if (data.category_id === params.category_id) return;
-
-    setData({
-      ...data,
-      category_id: foundCategory.id,
-    });
   }, [params, categories.length]);
 
   return (
